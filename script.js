@@ -8,7 +8,6 @@ const shopDiv = document.getElementById("shop");
 
 const upgradeBtn = document.getElementById("upgradeClick");
 const autoBtn = document.getElementById("autoClick");
-
 const boostBtn = document.getElementById("boostBtn");
 const critBtn = document.getElementById("critBtn");
 
@@ -19,7 +18,6 @@ const critStatusEl = document.getElementById("critStatus");
 
 const SAVE_KEY = "kotokliker_save";
 
-// загрузка
 let save = JSON.parse(localStorage.getItem(SAVE_KEY)) || {
   score: 0,
   clickPower: 1,
@@ -35,12 +33,8 @@ updateUI();
 
 function saveGame() {
   localStorage.setItem(SAVE_KEY, JSON.stringify({
-    score,
-    clickPower,
-    autoClickers,
-    boostPrice,
-    critBought,
-    boostActive
+    score, clickPower, autoClickers,
+    boostPrice, critBought, boostActive
   }));
 }
 
@@ -55,25 +49,19 @@ function updateUI() {
 // клик по коту
 catBtn.onclick = () => {
   let power = clickPower;
-
-  // буст
   if (boostActive) power *= 2;
-
-  // крит
-  if (critBought && Math.random() < 0.02) {
-    power *= 12;
-  }
+  if (critBought && Math.random() < 0.02) power *= 12;
 
   score += power;
   updateUI();
   saveGame();
 };
 
-// открыть/закрыть магазин
+// открыть / закрыть магазин
 openShopBtn.onclick = () => shopDiv.classList.add("show");
 closeShopBtn.onclick = () => shopDiv.classList.remove("show");
 
-// апгрейд клика
+// апгрейд
 upgradeBtn.onclick = () => {
   const cost = 10 * clickPower;
   if (score >= cost) {
@@ -84,7 +72,7 @@ upgradeBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// автокликер
+// автоклик
 autoBtn.onclick = () => {
   const cost = 50 * (autoClickers + 1);
   if (score >= cost) {
@@ -95,7 +83,7 @@ autoBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// буст x2
+// буст
 boostBtn.onclick = () => {
   if (score >= boostPrice) {
     score -= boostPrice;
@@ -107,11 +95,11 @@ boostBtn.onclick = () => {
     setTimeout(() => {
       boostActive = false;
       saveGame();
-    }, 30000); // 30 секунд
+    }, 30000);
   } else alert("Не хватает рыб!");
 };
 
-// критический клик
+// крит
 critBtn.onclick = () => {
   if (critBought) return alert("Уже куплено!");
   if (score >= 2000) {
@@ -122,7 +110,7 @@ critBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// автоклик каждую секунду
+// автоклик раз в секунду
 setInterval(() => {
   if (autoClickers > 0) {
     score += autoClickers;
