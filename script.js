@@ -44,6 +44,13 @@ function updateUI() {
   autoCountEl.textContent = autoClickers;
   boostPriceEl.textContent = boostPrice;
   critStatusEl.textContent = critBought ? "Куплен" : "Не куплен";
+
+  // обновляем текст кнопки буста
+  boostBtn.textContent = `⚡ Буст x2 (${boostPrice} 🐟)`;
+
+  // обновляем цену апгрейда клика
+  const clickCost = 10 * clickPower * clickPower;
+  upgradeBtn.textContent = `➕ +1 за клик (${clickCost} 🐟)`;
 }
 
 // клик по коту
@@ -61,9 +68,9 @@ catBtn.onclick = () => {
 openShopBtn.onclick = () => shopDiv.classList.add("show");
 closeShopBtn.onclick = () => shopDiv.classList.remove("show");
 
-// апгрейд
+// апгрейд клика (нормальная цена)
 upgradeBtn.onclick = () => {
-  const cost = 10 * clickPower;
+  const cost = 10 * clickPower * clickPower;
   if (score >= cost) {
     score -= cost;
     clickPower++;
@@ -72,7 +79,7 @@ upgradeBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// автоклик
+// автокликер
 autoBtn.onclick = () => {
   const cost = 50 * (autoClickers + 1);
   if (score >= cost) {
@@ -83,12 +90,14 @@ autoBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// буст
+// буст x2 (исправленный)
 boostBtn.onclick = () => {
   if (score >= boostPrice) {
     score -= boostPrice;
-    boostPrice = Math.round(boostPrice * 2.25);
     boostActive = true;
+
+    boostPrice = Math.round(boostPrice * 2.25);
+
     updateUI();
     saveGame();
 
@@ -96,7 +105,9 @@ boostBtn.onclick = () => {
       boostActive = false;
       saveGame();
     }, 30000);
-  } else alert("Не хватает рыб!");
+  } else {
+    alert("Не хватает рыб!");
+  }
 };
 
 // крит
