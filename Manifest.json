@@ -1,0 +1,15 @@
+{
+  "name": "КотоKликер",
+  "short_name": "КотоКликер",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffccdd",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
