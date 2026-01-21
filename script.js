@@ -1,30 +1,29 @@
-let score = 0;
-
 const scoreEl = document.getElementById("score");
 const catBtn = document.getElementById("cat");
 const resetBtn = document.getElementById("reset");
 
+// ключ сохранения
+const SAVE_KEY = "kotokliker_score";
+
 // загрузка
-if (localStorage.getItem("kotokliker_save")) {
-  score = parseInt(localStorage.getItem("kotokliker_save"));
-  scoreEl.textContent = score;
-}
+let score = Number(localStorage.getItem(SAVE_KEY)) || 0;
+scoreEl.textContent = score;
 
 // клик
-catBtn.onclick = () => {
+catBtn.addEventListener("click", () => {
   score++;
   scoreEl.textContent = score;
-  localStorage.setItem("kotokliker_save", score);
-};
+  localStorage.setItem(SAVE_KEY, score);
+});
 
 // сброс
-resetBtn.onclick = () => {
+resetBtn.addEventListener("click", () => {
   if (confirm("Точно сбросить прогресс?")) {
     score = 0;
     scoreEl.textContent = score;
-    localStorage.removeItem("kotokliker_save");
+    localStorage.setItem(SAVE_KEY, score); // важно: записываем 0
   }
-};
+});
 
 // анти-зум
 document.addEventListener("dblclick", e => {
