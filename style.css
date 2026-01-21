@@ -4,7 +4,7 @@ body {
   background: #f6f6f6;
   margin: 0;
   padding-top: 40px;
-  touch-action: manipulation; /* отключает зум жестами */
+  touch-action: manipulation;
 }
 
 h1 {
@@ -22,4 +22,9 @@ p {
   border: none;
   background: #ffccdd;
   cursor: pointer;
+}
+
+#reset {
+  font-size: 18px;
+  padding: 10px 20px;
 }
