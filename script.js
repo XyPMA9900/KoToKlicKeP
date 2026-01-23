@@ -1,7 +1,7 @@
 alert("JS ЗАПУСТИЛСЯ");
-document.addEventListener("click", e => {
-  alert("КЛИК ПО: " + e.target.tagName);
-});
+//document.addEventListener("click", e => {
+//  alert("КЛИК ПО: " + e.target.tagName);
+//});
 
 // ===== ЭЛЕМЕНТЫ =====
 const scoreEl = document.getElementById("score");
