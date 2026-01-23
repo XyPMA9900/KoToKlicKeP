@@ -1,10 +1,7 @@
-// alert("SCRIPT LOADED");
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== УТИЛИТА =====
   const $ = id => document.getElementById(id);
 
-  // ===== ЭЛЕМЕНТЫ =====
   const scoreEl = $("score");
   const catBtn = $("cat");
   const resetBtn = $("reset");
@@ -35,17 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const boostPriceEl = $("boostPrice");
   const critStatusEl = $("critStatus");
 
- // alert(
-//  "score=" + !!scoreEl +
-//  "\ncat=" + !!catBtn +
-//  "\nopenShop=" + !!openShopBtn +
- // "\nshop=" + !!shopDiv +
-//  "\nsettings=" + !!settingsDiv +
-//  "\ndev=" + !!devDiv +
-//  "\nupgrade=" + !!upgradeBtn
-//);
-
-  // ===== СОХРАНЕНИЕ =====
   const SAVE_KEY = "kotokliker_save";
   let save = JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
 
@@ -78,17 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
   updateUI();
   saveGame();
 
-  // ===== ЛОГИКА =====
-  catBtn.onclick = () => {
+  // === ИГРА ===
+  catBtn.addEventListener("click", () => {
     let power = clickPower;
     if (boostActive) power *= 2;
     if (critBought && Math.random() < 0.02) power *= 12;
     score += power;
     updateUI();
     saveGame();
-  };
+  });
 
-  upgradeBtn.onclick = () => {
+  upgradeBtn.addEventListener("click", () => {
     const cost = 10 * clickPower ** 2;
     if (score >= cost) {
       score -= cost;
@@ -96,9 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
       updateUI();
       saveGame();
     }
-  };
+  });
 
-  autoBtn.onclick = () => {
+  autoBtn.addEventListener("click", () => {
     const cost = 50 * (autoClickers + 1) ** 2;
     if (score >= cost) {
       score -= cost;
@@ -106,9 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
       updateUI();
       saveGame();
     }
-  };
+  });
 
-  boostBtn.onclick = () => {
+  boostBtn.addEventListener("click", () => {
     if (score >= boostPrice) {
       score -= boostPrice;
       boostActive = true;
@@ -120,33 +106,33 @@ document.addEventListener("DOMContentLoaded", () => {
         saveGame();
       }, 30000);
     }
-  };
+  });
 
-  critBtn.onclick = () => {
+  critBtn.addEventListener("click", () => {
     if (!critBought && score >= 2000) {
       score -= 2000;
       critBought = true;
       updateUI();
       saveGame();
     }
-  };
+  });
 
-  giveMillionBtn.onclick = () => {
-    score += 1000000;
+  giveMillionBtn.addEventListener("click", () => {
+    score += 1_000_000;
     updateUI();
     saveGame();
-  };
+  });
 
-  checkDevBtn.onclick = () => {
+  checkDevBtn.addEventListener("click", () => {
     if (devPassInput.value === "8923") {
       devMsg.textContent = "Доступ разрешён 😈";
       devPanel.style.display = "block";
     } else {
       devMsg.textContent = "Пароль неверный 💀";
     }
-  };
+  });
 
-  resetBtn.onclick = () => {
+  resetBtn.addEventListener("click", () => {
     score = 0;
     clickPower = 1;
     autoClickers = 0;
@@ -155,9 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
     boostActive = false;
     updateUI();
     saveGame();
-  };
+  });
 
-  // ===== ПАССИВ =====
+  // === ПАССИВ ===
   setInterval(() => {
     if (autoClickers > 0) {
       score += autoClickers;
@@ -166,24 +152,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 1000);
 
-  // ===== МОДАЛКИ =====
+  // === МОДАЛКИ (БЕЗ БАГОВ) ===
   function closeAll() {
-    shopDiv.style.display = "none";
-    settingsDiv.style.display = "none";
-    devDiv.style.display = "none";
+    shopDiv.classList.remove("show");
+    settingsDiv.classList.remove("show");
+    devDiv.classList.remove("show");
   }
 
   function showOnly(div) {
     closeAll();
-    div.style.display = "flex";
+    div.classList.add("show");
   }
 
-  openShopBtn.onclick = () => showOnly(shopDiv);
-  closeShopBtn.onclick = closeAll;
+  openShopBtn.addEventListener("click", () => showOnly(shopDiv));
+  closeShopBtn.addEventListener("click", closeAll);
 
-  openSettingsBtn.onclick = () => showOnly(settingsDiv);
-  closeSettingsBtn.onclick = closeAll;
+  openSettingsBtn.addEventListener("click", () => showOnly(settingsDiv));
+  closeSettingsBtn.addEventListener("click", closeAll);
 
-  openDevBtn.onclick = () => showOnly(devDiv);
+  openDevBtn.addEventListener("click", () => showOnly(devDiv));
 
 });
