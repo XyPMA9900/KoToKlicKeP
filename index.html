@@ -15,30 +15,37 @@
 
   <button id="cat">🐱</button>
 
-  <br><br>
-  <button id="openShop">🛒 Магазин</button>
-  <button id="openSettings">⚙️ Настройки</button>
-
-  <!-- МАГАЗИН -->
-  <div id="shop" class="modal">
-    <h2>Магазин</h2>
-    <button id="upgradeClick">➕ +1 за клик (10 🐟)</button>
-    <p>Сила клика: <span id="clickLevel">1</span></p>
-    <button onclick="closeAll()">Закрыть</button>
+  <div class="main-buttons">
+    <button id="openShop">🛒 Магазин</button>
+    <button id="openSettings">⚙️ Настройки</button>
   </div>
+</div>
 
-  <!-- НАСТРОЙКИ -->
-  <div id="settings" class="modal">
+<!-- МАГАЗИН -->
+<div id="shop" class="modal">
+  <div class="modal-box">
+    <h2>Магазин</h2>
+    <button id="upgradeClick">➕ +1 за клик</button>
+    <p>Сила клика: <span id="clickLevel">1</span></p>
+    <button id="closeShop">Закрыть</button>
+  </div>
+</div>
+
+<!-- НАСТРОЙКИ -->
+<div id="settings" class="modal">
+  <div class="modal-box">
     <h2>Настройки</h2>
     <button id="reset">🗑 Сбросить прогресс</button>
     <br><br>
     <button id="openDev">🧪 Доступ разработчика</button>
     <br><br>
-    <button onclick="closeAll()">Закрыть</button>
+    <button id="closeSettings">Закрыть</button>
   </div>
+</div>
 
-  <!-- DEV -->
-  <div id="dev" class="modal">
+<!-- DEV -->
+<div id="dev" class="modal">
+  <div class="modal-box">
     <h2>Dev доступ</h2>
     <input id="devPass" placeholder="Введите пароль">
     <br><br>
@@ -48,7 +55,7 @@
       <button id="giveMillion">💰 Получить миллион рыб</button>
     </div>
     <br>
-    <button onclick="closeAll()">Закрыть</button>
+    <button id="closeDev">Закрыть</button>
   </div>
 </div>
 
