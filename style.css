@@ -1,9 +1,7 @@
 .modal {
-  pointer-events: none;
 }
 
 .modal.show {
-  pointer-events: auto;
 }
 
 body {
@@ -33,7 +31,6 @@ body {
   justify-content: center;
 }
 button, input {
-  pointer-events: auto !important;
   z-index: 1000;
   position: relative;
 }
