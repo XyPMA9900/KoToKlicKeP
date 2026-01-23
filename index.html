@@ -1,64 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>КотоКликер 🐱</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
-</head>
+<html>
 <body>
-
-<div id="app">
-  <h1>КотоКликер 🐱</h1>
-  <p>Рыбки: <span id="score">0</span> 🐟</p>
-
-  <button id="cat">🐱</button>
-
-  <div class="main-buttons">
-    <button id="openShop">🛒 Магазин</button>
-    <button id="openSettings">⚙️ Настройки</button>
-  </div>
-</div>
-
-<!-- МАГАЗИН -->
-<div id="shop" class="modal">
-  <div class="modal-box">
-    <h2>Магазин</h2>
-    <button id="upgradeClick">➕ +1 за клик</button>
-    <p>Сила клика: <span id="clickLevel">1</span></p>
-    <button id="closeShop">Закрыть</button>
-  </div>
-</div>
-
-<!-- НАСТРОЙКИ -->
-<div id="settings" class="modal">
-  <div class="modal-box">
-    <h2>Настройки</h2>
-    <button id="reset">🗑 Сбросить прогресс</button>
-    <br><br>
-    <button id="openDev">🧪 Доступ разработчика</button>
-    <br><br>
-    <button id="closeSettings">Закрыть</button>
-  </div>
-</div>
-
-<!-- DEV -->
-<div id="dev" class="modal">
-  <div class="modal-box">
-    <h2>Dev доступ</h2>
-    <input id="devPass" placeholder="Введите пароль">
-    <br><br>
-    <button id="checkDev">Войти</button>
-    <p id="devMsg"></p>
-    <div id="devPanel" style="display:none;">
-      <button id="giveMillion">💰 Получить миллион рыб</button>
-    </div>
-    <br>
-    <button id="closeDev">Закрыть</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <button id="test">TEST</button>
+  <script>
+    document.getElementById("test").onclick = () => alert("OK");
+  </script>
 </body>
 </html>
