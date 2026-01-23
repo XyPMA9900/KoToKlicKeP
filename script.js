@@ -159,13 +159,13 @@ boostBtn.onclick = () => {
 
 // ===== КРИТ =====
 critBtn.onclick = () => {
-  if (critBought) return alert("Уже куплено!");
+  if (critBought) return console.log("Уже куплено!");
   if (score >= 2000) {
     score -= 2000;
     critBought = true;
     updateUI();
     saveGame();
-  } else alert("Не хватает рыб!");
+  } else console.log("Не хватает рыб!");
 };
 
 // ===== ПАССИВ =====
