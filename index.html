@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru"
-  <head>
+<html lang="ru">
+<head>
   <meta charset="UTF-8">
   <title>КотоКликер 🐱</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<div id="app">
   <h1>КотоКликер 🐱</h1>
   <p>Рыбки: <span id="score">0</span> 🐟</p>
 
@@ -16,36 +17,41 @@
 
   <br><br>
   <button id="openShop">🛒 Магазин</button>
-  <br><br>
-  <button id="reset">🗑 Сбросить прогресс</button>
+  <button id="openSettings">⚙️ Настройки</button>
 
   <!-- МАГАЗИН -->
-  <div id="shop">
-    <div class="shop-header">
-      <h2>Магазин</h2>
-      <button id="closeShop" class="close-btn">✖</button>
-    </div>
-
+  <div id="shop" class="modal">
+    <h2>Магазин</h2>
     <button id="upgradeClick">➕ +1 за клик (10 🐟)</button>
     <p>Сила клика: <span id="clickLevel">1</span></p>
-
-    <button id="autoClick">🤖 Автокликер (50 🐟)</button>
-    <p>Автокликеров: <span id="autoCount">0</span></p>
-
-    <hr>
-
-    <button id="boostBtn">⚡ Буст x2 (100 🐟)</button>
-    <p>Цена буста: <span id="boostPrice">100</span></p>
-
-    <button id="critBtn">🎯 Критический клик (2000 🐟)</button>
-    <p id="critStatus">Не куплен</p>
+    <button onclick="closeAll()">Закрыть</button>
   </div>
 
-  <script src="script.js"></script>
+  <!-- НАСТРОЙКИ -->
+  <div id="settings" class="modal">
+    <h2>Настройки</h2>
+    <button id="reset">🗑 Сбросить прогресс</button>
+    <br><br>
+    <button id="openDev">🧪 Доступ разработчика</button>
+    <br><br>
+    <button onclick="closeAll()">Закрыть</button>
+  </div>
+
+  <!-- DEV -->
+  <div id="dev" class="modal">
+    <h2>Dev доступ</h2>
+    <input id="devPass" placeholder="Введите пароль">
+    <br><br>
+    <button id="checkDev">Войти</button>
+    <p id="devMsg"></p>
+    <div id="devPanel" style="display:none;">
+      <button id="giveMillion">💰 Получить миллион рыб</button>
+    </div>
+    <br>
+    <button onclick="closeAll()">Закрыть</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
-<script>
-"if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");"
-}
-</script>
