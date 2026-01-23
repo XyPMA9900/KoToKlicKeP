@@ -5,11 +5,12 @@
   "name": "KoToKlicKeP",
   "orientation": "portrait",
   "scope": "/KoToKlicKeP/",
-  "short_name": "KoToKlicKeP",
+  "short_name": "Clicker",
   "start_url": "/KoToKlicKeP/",
   "theme_color": "#4000ff",
   "categories": [
     "games",
     "kids"
-  ]
+  ],
+  "description": "Кликай по коту, собирай рыб и прокачивайся. контакт XyPMA9900(telegram)"
 }
