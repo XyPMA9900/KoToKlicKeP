@@ -1,3 +1,7 @@
+document.addEventListener("click", e => {
+  alert("КЛИК ПО: " + e.target.tagName);
+});
+
 // ===== ЭЛЕМЕНТЫ =====
 const scoreEl = document.getElementById("score");
 const catBtn = document.getElementById("cat");
