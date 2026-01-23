@@ -1,9 +1,7 @@
-//alert("JS ЗАПУСТИЛСЯ");
-//document.addEventListener("click", e => {
-//  alert("КЛИК ПО: " + e.target.tagName);
-//});
+document.addEventListener("DOMContentLoaded", () => {
 
-// ===== ЭЛЕМЕНТЫ =====
+  // ВЕСЬ ТВОЙ КОД СЮДА
+  // ===== ЭЛЕМЕНТЫ =====
 const scoreEl = document.getElementById("score");
 const catBtn = document.getElementById("cat");
 const resetBtn = document.getElementById("reset");
@@ -207,3 +205,6 @@ function showOnly(div) {
 }
 
 // анти-зум
+  // от const scoreEl до конца файла
+
+});
