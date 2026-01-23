@@ -1,25 +1,15 @@
 {
-  "name": "КотоКликер",
-  "short_name": "КотоКликер",
-  "description": "Кликай по коту, собирай рыб и прокачивайся. контакт XyPMA9900(telegram)",
-  "start_url": "/KoToKlicKeP-0.2/",
-  "scope": "/KoToKlicKeP-0.2/",
-  "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffccdd",
-  "orientation": "portrait",
-  "id": "/KoToKlicKeP-0.2/",
-  "icons": [
-  {
-    "src": "icon-192.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "any"
-  },
-  {
-    "src": "icon-512.png",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "any"
-  }
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "xypma9900.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "xypma9900.github",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": [
+    "games",
+    "kids"
   ]
+}
