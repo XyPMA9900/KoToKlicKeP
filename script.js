@@ -139,7 +139,7 @@ autoBtn.onclick = () => {
     autoClickers++;
     updateUI();
     saveGame();
-  } else alert("Не хватает рыб!");
+  } else console.log("Не хватает рыб!");
 };
 
 // ===== БУСТ =====
@@ -154,7 +154,7 @@ boostBtn.onclick = () => {
       boostActive = false;
       saveGame();
     }, 30000);
-  } else alert("Не хватает рыб!");
+  } else console.log("Не хватает рыб!");
 };
 
 // ===== КРИТ =====
@@ -179,7 +179,6 @@ setInterval(() => {
 
 // ===== СБРОС =====
 resetBtn.onclick = () => {
-  if (confirm("Точно сбросить прогресс?")) {
     score = 0;
     clickPower = 1;
     autoClickers = 0;
