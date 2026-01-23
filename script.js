@@ -1,3 +1,4 @@
+// ===== ЭЛЕМЕНТЫ =====
 const scoreEl = document.getElementById("score");
 const catBtn = document.getElementById("cat");
 const resetBtn = document.getElementById("reset");
@@ -5,6 +6,17 @@ const resetBtn = document.getElementById("reset");
 const openShopBtn = document.getElementById("openShop");
 const closeShopBtn = document.getElementById("closeShop");
 const shopDiv = document.getElementById("shop");
+
+const openSettingsBtn = document.getElementById("openSettings");
+const settingsDiv = document.getElementById("settings");
+const closeSettingsBtn = document.getElementById("closeSettings");
+
+const openDevBtn = document.getElementById("openDev");
+const devDiv = document.getElementById("dev");
+const devPassInput = document.getElementById("devPass");
+const devMsg = document.getElementById("devMsg");
+const devPanel = document.getElementById("devPanel");
+const giveMillionBtn = document.getElementById("giveMillion");
 
 const upgradeBtn = document.getElementById("upgradeClick");
 const autoBtn = document.getElementById("autoClick");
@@ -18,10 +30,9 @@ const critStatusEl = document.getElementById("critStatus");
 
 const SAVE_KEY = "kotokliker_save";
 
-// ===== ЗАГРУЗКА СЕЙВА =====
+// ===== ЗАГРУЗКА =====
 let save = JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
 
-// ЖЁСТКАЯ НОРМАЛИЗАЦИЯ
 let score = Number(save.score);
 if (!isFinite(score)) score = 0;
 
@@ -38,7 +49,7 @@ let critBought = save.critBought === true;
 let boostActive = save.boostActive === true;
 
 updateUI();
-saveGame(); // перезаписываем сейв уже нормальными числами
+saveGame();
 
 // ===== СОХРАНЕНИЕ =====
 function saveGame() {
@@ -72,18 +83,38 @@ function updateUI() {
 // ===== КЛИК =====
 catBtn.onclick = () => {
   let power = clickPower;
-
   if (boostActive) power *= 2;
   if (critBought && Math.random() < 0.02) power *= 12;
-
   score += power;
   updateUI();
   saveGame();
 };
 
 // ===== МАГАЗИН =====
-openShopBtn.onclick = () => shopDiv.classList.add("show");
-closeShopBtn.onclick = () => shopDiv.classList.remove("show");
+openShopBtn.onclick = () => showOnly(shopDiv);
+closeShopBtn.onclick = closeAll;
+
+// ===== НАСТРОЙКИ =====
+openSettingsBtn.onclick = () => showOnly(settingsDiv);
+closeSettingsBtn.onclick = closeAll;
+
+// ===== DEV =====
+openDevBtn.onclick = () => showOnly(devDiv);
+
+checkDev.onclick = () => {
+  if (devPassInput.value === "8923") {
+    devMsg.textContent = "Доступ разрешён 😈";
+    devPanel.style.display = "block";
+  } else {
+    devMsg.textContent = "пароль неверный💔😡☠️❌";
+  }
+};
+
+giveMillionBtn.onclick = () => {
+  score += 1000000;
+  updateUI();
+  saveGame();
+};
 
 // ===== АПГРЕЙД =====
 upgradeBtn.onclick = () => {
@@ -107,18 +138,14 @@ autoBtn.onclick = () => {
   } else alert("Не хватает рыб!");
 };
 
-// ===== БУСТ (БОЛЬШЕ НИКОГДА НЕ NaN) =====
+// ===== БУСТ =====
 boostBtn.onclick = () => {
   if (score >= boostPrice) {
     score -= boostPrice;
     boostActive = true;
-
     boostPrice = Math.round(boostPrice * 2.25);
-    if (!isFinite(boostPrice)) boostPrice = 100;
-
     updateUI();
     saveGame();
-
     setTimeout(() => {
       boostActive = false;
       saveGame();
@@ -159,6 +186,18 @@ resetBtn.onclick = () => {
     saveGame();
   }
 };
+
+// ===== УТИЛИТЫ =====
+function closeAll() {
+  shopDiv.style.display = "none";
+  settingsDiv.style.display = "none";
+  devDiv.style.display = "none";
+}
+
+function showOnly(div) {
+  closeAll();
+  div.style.display = "block";
+}
 
 // анти-зум
 document.addEventListener("dblclick", e => e.preventDefault());
