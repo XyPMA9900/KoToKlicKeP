@@ -106,12 +106,6 @@ $("loginBtn").onclick=()=>{
   }
 
   currentUser=n;
-  localStorage.setItem("currentUser",n);
-  load(); update();
-  $("loginScreen").classList.remove("show");
-  $("playerName").textContent=n;
-};
-  currentUser=n;
   localStorage.setItem("accounts",JSON.stringify(accounts));
   localStorage.setItem("currentUser",n);
   load(); update();
