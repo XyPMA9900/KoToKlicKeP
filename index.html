@@ -55,12 +55,24 @@
     <button id="resetGame">🗑 Сброс прогресса</button>
     <button id="logoutBtn">🚪 Выйти</button>
     <button id="deleteAccountBtn">❌ Удалить аккаунт</button>
-    <br><br>
+
+    <hr>
+
+    <h3>🧪 Разработчик</h3>
+    <input id="devPass" placeholder="Пароль">
+    <button id="checkDev">Войти</button>
+    <p id="devMsg"></p>
+
+    <div id="devPanel" style="display:none;">
+      <button id="giveMillion">💰 +1 000 000 рыб</button>
+    </div>
+
+    <br>
     <button id="closeSettings">Закрыть</button>
   </div>
 </div>
 
-<!-- Firebase SDK -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
