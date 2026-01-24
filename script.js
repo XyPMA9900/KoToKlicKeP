@@ -235,3 +235,24 @@ if(currentUser){
   loginScreen.classList.remove("show");
   playerNameEl.textContent = currentUser;
 }
+
+/* ======= ВЫХОД/УДАЛЕНИЕ АККАУНТА ======== */
+
+const logoutBtn = $("logoutBtn");
+const deleteAccountBtn = $("deleteAccountBtn");
+
+/* ВЫЙТИ */
+logoutBtn.onclick = () => {
+  localStorage.removeItem("currentUser");
+  location.reload();
+};
+
+/* УДАЛИТЬ АККАУНТ */
+deleteAccountBtn.onclick = () => {
+  if(confirm("Удалить аккаунт навсегда? 😿")){
+    delete accounts[currentUser];
+    localStorage.removeItem("currentUser");
+    saveAccounts();
+    location.reload();
+  }
+};
