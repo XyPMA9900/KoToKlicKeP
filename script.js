@@ -80,6 +80,17 @@ cat.onclick = () => {
   },200);
 };
 
+/* СБРОООООС */
+resetGameBtn.onclick = () => {
+  if (confirm("Точно сбросить всё? 😿")) {
+    score = 0;
+    clickPower = 1;
+    autoClickers = 0;
+    localStorage.clear();
+    updateUI();
+  }
+};
+
 /* МАГАЗИН */
 openShopBtn.onclick = () => shop.classList.add("show");
 closeShopBtn.onclick = () => shop.classList.remove("show");
