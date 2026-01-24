@@ -5,7 +5,7 @@ const $ = id => document.getElementById(id);
 /* ================= АККАУНТЫ ================= */
 
 let accounts = JSON.parse(localStorage.getItem("accounts")) || {};
-let currentUser = localStorage.getItem("currentUser") || null;
+let currentUser = localStorage.getItem("currentUser");
 
 const loginScreen = $("loginScreen");
 const loginName = $("loginName");
@@ -16,7 +16,6 @@ const playerNameEl = $("playerName");
 
 function saveAccounts(){
   localStorage.setItem("accounts", JSON.stringify(accounts));
-  localStorage.setItem("currentUser", currentUser);
 }
 
 /* ================= ЭЛЕМЕНТЫ ================= */
@@ -63,7 +62,7 @@ let critChance = 0;
 let passiveMultiplier = 1;
 let boostActive = false;
 
-/* ================= АККАУНТ ЛОГИКА ================= */
+/* ================= АККАУНТ ================= */
 
 function loadUser(){
   const u = accounts[currentUser];
@@ -75,6 +74,7 @@ function loadUser(){
   updateUI();
 }
 
+/* ЛОГИН / РЕГИСТРАЦИЯ */
 loginBtn.onclick = () => {
   const name = loginName.value.trim();
   const pass = loginPass.value.trim();
@@ -103,13 +103,14 @@ loginBtn.onclick = () => {
   }
 
   currentUser = name;
+  localStorage.setItem("currentUser", currentUser);
   saveAccounts();
   loadUser();
   loginScreen.classList.remove("show");
   playerNameEl.textContent = name;
 };
 
-/* ================= СОХРАНЕНИЕ ================= */
+/* ================= СОХРАНЕНИЕ ИГРЫ ================= */
 
 function saveGame(){
   if(!currentUser) return;
@@ -202,41 +203,11 @@ setInterval(()=>{
   saveGame();
 },1000);
 
-/* ================= НАСТРОЙКИ ================= */
-
-resetGameBtn.onclick = () => {
-  if(confirm("Сбросить прогресс?")){
-    accounts[currentUser].score = 0;
-    accounts[currentUser].clickPower = 1;
-    accounts[currentUser].autoClickers = 0;
-    accounts[currentUser].critChance = 0;
-    accounts[currentUser].passiveMultiplier = 1;
-    loadUser();
-    saveAccounts();
-  }
-};
-
-/* DEV */
-checkDevBtn.onclick = () => {
-  if(devPassInput.value === "8923"){
-    devMsg.textContent = "Доступ разрешён 😈";
-    devPanel.style.display = "block";
-  } else {
-    devMsg.textContent = "❌ Неверный пароль";
-  }
-};
-
-giveMillionBtn.onclick = () => {
-  score += 1_000_000;
-  updateUI();
-  saveGame();
-};
-
 /* ================= ВЫХОД ================= */
 
 logoutBtn.onclick = () => {
   localStorage.removeItem("currentUser");
-  location.reload();
+  location.reload(true);
 };
 
 /* ================= УДАЛЕНИЕ ================= */
@@ -244,16 +215,18 @@ logoutBtn.onclick = () => {
 deleteAccountBtn.onclick = () => {
   if(confirm("Удалить аккаунт навсегда? 😿")){
     delete accounts[currentUser];
-    localStorage.removeItem("currentUser");
     saveAccounts();
-    location.reload();
+    localStorage.removeItem("currentUser");
+    location.reload(true);
   }
 };
 
 /* ================= СТАРТ ================= */
 
-if(currentUser){
+if(currentUser && accounts[currentUser]){
   loadUser();
   loginScreen.classList.remove("show");
   playerNameEl.textContent = currentUser;
+} else {
+  loginScreen.classList.add("show");
 }
