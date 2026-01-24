@@ -1,3 +1,4 @@
+alert("JS START");
 const $ = id => document.getElementById(id);
 let ONLINE = navigator.onLine;
 
@@ -191,3 +192,4 @@ if(currentUser){
   loginScreen.classList.remove("show");
   playerNameEl.textContent=currentUser;
 }
+alert("JS END");
