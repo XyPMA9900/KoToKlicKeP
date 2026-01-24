@@ -185,3 +185,70 @@ if(currentUser && accounts[currentUser]){
 }
 
 };
+
+/* === KAZINO === */
+
+const kazino = {
+  modes: [
+    {name:"ULTRAHARDER", chance:0.000001, mult:1000000},
+    {name:"ULTRAHARD", chance:0.0001, mult:1000},
+    {name:"HARD", chance:0.01, mult:500},
+    {name:"RISK&RICH", chance:0.05, mult:200},
+    {name:"RISK", chance:0.15, mult:180},
+    {name:"NORMALLY+", chance:0.20, mult:150},
+    {name:"PASHALKO", chance:0.67, mult:14, x2chance:0.88},
+    {name:"EZ WIN", chance:0.65, mult:2},
+    {name:"NORMALLY", chance:0.50, mult:3},
+    {name:"PROBNIK", chance:0.50, mult:1, test:true}
+  ]
+};
+
+const kazinoInput = $("kazinoBet");
+const kazinoResult = $("kazinoResult");
+const kazinoButtons = document.querySelectorAll("[data-kazino]");
+
+kazinoButtons.forEach(btn=>{
+  btn.onclick = ()=>{
+    const mode = kazino.modes[btn.dataset.kazino];
+    const bet = Number(kazinoInput.value);
+
+    if(!bet || bet<=0){
+      kazinoResult.textContent = "Введите ставку!";
+      return;
+    }
+
+    if(score < bet){
+      kazinoResult.textContent = "Не хватает рыб 🐟";
+      return;
+    }
+
+    if(mode.test){
+      kazinoResult.textContent = Math.random()<0.5
+        ? "✔️ ПРОБНИК: выиграл, но ничего не дали"
+        : "❌ ПРОБНИК: проиграл, но ничего не забрали";
+      return;
+    }
+
+    score -= bet;
+
+    if(Math.random() < mode.chance){
+      let win = bet * mode.mult;
+
+      if(mode.x2chance && Math.random() < mode.x2chance){
+        win *= 2;
+        kazinoResult.textContent = "✨ X2 ПАСХАЛКА! +" + win;
+      } else {
+        kazinoResult.textContent = "✔️ ВЫИГРЫШ +" + win;
+      }
+
+      score += win;
+    } else {
+      kazinoResult.textContent = "❌ ПРОИГРЫШ -"+bet;
+    }
+
+    save(); update();
+  };
+};
+
+$("openKazino").onclick = ()=> $("kazino").classList.add("show");
+$("closeKazino").onclick = ()=> $("kazino").classList.remove("show");
