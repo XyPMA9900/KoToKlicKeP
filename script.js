@@ -230,3 +230,5 @@ if(currentUser && accounts[currentUser]){
 } else {
   loginScreen.classList.add("show");
 }
+
+db.ref("test").set("helloprint");
