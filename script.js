@@ -1,6 +1,5 @@
 /* Блокировка скролла */
 document.addEventListener("touchmove", e => e.preventDefault(), { passive:false });
-
 const $ = id => document.getElementById(id);
 
 /* ================= АККАУНТЫ ================= */
@@ -39,6 +38,9 @@ const checkDevBtn = $("checkDev");
 const devMsg = $("devMsg");
 const devPanel = $("devPanel");
 const giveMillionBtn = $("giveMillion");
+
+const logoutBtn = $("logoutBtn");
+const deleteAccountBtn = $("deleteAccountBtn");
 
 /* Кнопки магазина */
 const upgradeBtn = $("upgradeClick");
@@ -181,12 +183,10 @@ function buy(cost, effect){
 upgradeBtn.onclick = () => buy(10 * clickPower, ()=>clickPower++);
 autoBtn.onclick = () => buy(50 * (autoClickers + 1), ()=>autoClickers++);
 critBtn.onclick = () => buy(1000, ()=>critChance += 0.05);
-
 boostBtn.onclick = () => buy(500, ()=>{
   boostActive = true;
   setTimeout(()=>boostActive=false, 15000);
 });
-
 superCatBtn.onclick = () => buy(2000, ()=>clickPower += 5);
 doubleAutoBtn.onclick = () => buy(1500, ()=>autoClickers *= 2);
 goldFishBtn.onclick = () => buy(3000, ()=>score += 5000);
@@ -202,17 +202,21 @@ setInterval(()=>{
   saveGame();
 },1000);
 
-/* ================= СБРОС ================= */
+/* ================= НАСТРОЙКИ ================= */
 
 resetGameBtn.onclick = () => {
-  if(confirm("Точно сбросить всё? 😿")){
-    localStorage.removeItem("currentUser");
-    location.reload();
+  if(confirm("Сбросить прогресс?")){
+    accounts[currentUser].score = 0;
+    accounts[currentUser].clickPower = 1;
+    accounts[currentUser].autoClickers = 0;
+    accounts[currentUser].critChance = 0;
+    accounts[currentUser].passiveMultiplier = 1;
+    loadUser();
+    saveAccounts();
   }
 };
 
-/* ================= ДЕВ ================= */
-
+/* DEV */
 checkDevBtn.onclick = () => {
   if(devPassInput.value === "8923"){
     devMsg.textContent = "Доступ разрешён 😈";
@@ -228,27 +232,15 @@ giveMillionBtn.onclick = () => {
   saveGame();
 };
 
-/* ================= СТАРТ ================= */
+/* ================= ВЫХОД ================= */
 
-if(currentUser){
-  loadUser();
-  loginScreen.classList.remove("show");
-  playerNameEl.textContent = currentUser;
-}
-
-/* ======= ВЫХОД/УДАЛЕНИЕ АККАУНТА ======== */
-
-const logoutBtn = $("logoutBtn");
-const deleteAccountBtn = $("deleteAccountBtn");
-
-/* ВЫЙТИ */
 logoutBtn.onclick = () => {
-  alert("LOGOUT");
   localStorage.removeItem("currentUser");
   location.reload();
 };
 
-/* УДАЛИТЬ АККАУНТ */
+/* ================= УДАЛЕНИЕ ================= */
+
 deleteAccountBtn.onclick = () => {
   if(confirm("Удалить аккаунт навсегда? 😿")){
     delete accounts[currentUser];
@@ -257,3 +249,11 @@ deleteAccountBtn.onclick = () => {
     location.reload();
   }
 };
+
+/* ================= СТАРТ ================= */
+
+if(currentUser){
+  loadUser();
+  loginScreen.classList.remove("show");
+  playerNameEl.textContent = currentUser;
+}
