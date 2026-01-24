@@ -143,3 +143,10 @@ setInterval(()=>{
 },1000);
 
 updateUI();
+
+/*Я ВЫИГРАЛ МИЛЛИОН*/
+giveMillionBtn.onclick = () => {
+  score += 1_000_000;
+  updateUI();
+  saveGame();
+};
