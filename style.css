@@ -17,9 +17,12 @@ html, body {
 }
 
 #score {
-  font-size: 68px;
+  font-size: 72px;
   margin-bottom: 20px;
   font-weight: bold;
+  max-width: 100%;
+  text-align: center;
+  word-break: break-all;
 }
 
 #cat {
