@@ -7,19 +7,22 @@ let score = 0;
 let clickPower = 1;
 let autoClickers = 0;
 let critChance = 0;
-let passiveMultiplier = 1;
+let boostActive = false;
 
 const items = [
-  {id:"click", name:"➕ Клик", cost:10, desc:"+1 к клику", buy:()=>clickPower++},
-  {id:"auto", name:"🤖 Авто", cost:50, desc:"+1 авто", buy:()=>autoClickers++},
-  {id:"crit", name:"💥 Крит", cost:1000, desc:"Шанс x5", buy:()=>critChance+=0.05},
-  {id:"boost", name:"⚡ Буст", cost:500, desc:"x2 на 15 сек", buy:()=>boost()},
-  {id:"mega", name:"🔥 Мега", cost:4000, desc:"x2 клики", buy:()=>clickPower*=2}
+  {name:"➕ Клик", cost:10, desc:"+1 к клику", buy:()=>clickPower++},
+  {name:"🤖 Авто", cost:50, desc:"+1 авто", buy:()=>autoClickers++},
+  {name:"💥 Крит", cost:1000, desc:"Шанс x5", buy:()=>critChance+=0.05},
+  {name:"⚡ Буст", cost:500, desc:"x2 на 15 сек", buy:()=>{
+    boostActive=true;
+    setTimeout(()=>boostActive=false,15000);
+  }},
+  {name:"🔥 Мега", cost:4000, desc:"x2 клики", buy:()=>clickPower*=2}
 ];
 
 function save(){
   localStorage.setItem("save_"+currentUser, JSON.stringify({
-    score, clickPower, autoClickers, critChance, passiveMultiplier
+    score, clickPower, autoClickers, critChance
   }));
 }
 
@@ -30,12 +33,11 @@ function load(){
     clickPower=d.clickPower;
     autoClickers=d.autoClickers;
     critChance=d.critChance;
-    passiveMultiplier=d.passiveMultiplier;
   }
 }
 
 function update(){
-  $("score").textContent = score;
+  $("score").textContent = score+" 🐟";
   renderShop();
 }
 
@@ -62,53 +64,43 @@ function renderShop(){
   });
 }
 
+/* КОТ */
 $("cat").onclick = ()=>{
   let gain = clickPower;
   if(Math.random()<critChance) gain*=5;
   if(boostActive) gain*=2;
   score+=gain;
+  save(); update();
 
-  saveGame();
-  updateUI();
-
-  cat.classList.add("active");
-  cat.textContent="😹";
+  $("cat").classList.add("active");
+  $("cat").textContent="😹";
   setTimeout(()=>{
-    cat.textContent="🐱";
-    cat.classList.remove("active");
+    $("cat").textContent="🐱";
+    $("cat").classList.remove("active");
   },200);
 };
 
+/* ПАССИВ */
 setInterval(()=>{
-  score+=autoClickers*passiveMultiplier;
+  score+=autoClickers;
   save(); update();
 },1000);
 
-$("resetGame").onclick=()=>{
-  if(confirm("Точно сбросить прогресс?")){
-    score=0; clickPower=1; autoClickers=0; critChance=0;
-    save(); update();
-  }
-};
-
-$("deleteAccountBtn").onclick=()=>{
-  if(confirm("Удалить аккаунт навсегда?")){
-    delete accounts[currentUser];
-    localStorage.removeItem("save_"+currentUser);
-    localStorage.setItem("accounts",JSON.stringify(accounts));
-    localStorage.removeItem("currentUser");
-    location.reload();
-  }
-};
-
+/* ЛОГИН */
 $("loginBtn").onclick=()=>{
   const n=$("loginName").value;
   const p=$("loginPass").value;
-  if(!accounts[n]) accounts[n]={password:p};
+
+  if(!accounts[n]){
+    accounts[n]={password:p};
+    $("loginMsg").textContent="Аккаунт создан";
+  }
+
   if(accounts[n].password!==p){
-    $("loginMsg").textContent="❌Неверный пароль❌";
+    $("loginMsg").textContent="Неверный пароль";
     return;
   }
+
   currentUser=n;
   localStorage.setItem("accounts",JSON.stringify(accounts));
   localStorage.setItem("currentUser",n);
@@ -117,51 +109,38 @@ $("loginBtn").onclick=()=>{
   $("playerName").textContent=n;
 };
 
-if(currentUser){
-  load(); update();
-  $("loginScreen").classList.remove("show");
-  $("playerName").textContent=currentUser;
-}
-
-const logoutBtn = document.getElementById("logoutBtn");
-
-logoutBtn.onclick = ()=>{
+/* ВЫХОД */
+$("logoutBtn").onclick=()=>{
   localStorage.removeItem("currentUser");
   location.reload();
 };
 
-deleteAccountBtn.onclick = ()=>{
-  if(confirm("Ты точно хочешь удалить аккаунт НАВСЕГДА? 😿")){
-    
-    // удалить локальный аккаунт
+/* УДАЛЕНИЕ */
+$("deleteAccountBtn").onclick=()=>{
+  if(confirm("Удалить аккаунт НАВСЕГДА?")){
     delete accounts[currentUser];
     localStorage.setItem("accounts",JSON.stringify(accounts));
-
-    // удалить данные в firebase
-    if(ONLINE){
-      db.ref("users/"+currentUser).remove();
-    }
-
-    // очистить локальные сохранения
-    localStorage.removeItem("score");
-    localStorage.removeItem("clickPower");
-    localStorage.removeItem("autoClickers");
-    localStorage.removeItem("critChance");
-    localStorage.removeItem("passiveMultiplier");
-
+    localStorage.removeItem("save_"+currentUser);
     localStorage.removeItem("currentUser");
     location.reload();
   }
 };
 
-$("openShop").onclick=()=>$("shop").classList.add("show");
-$("closeShop").onclick=()=>$("shop").classList.remove("show");
-$("openSettings").onclick=()=>$("settings").classList.add("show");
-$("closeSettings").onclick=()=>$("settings").classList.remove("show");
+/* СБРОС */
+$("resetGame").onclick=()=>{
+  if(confirm("Сбросить прогресс?")){
+    score=0; clickPower=1; autoClickers=0; critChance=0;
+    save(); update();
+  }
+};
 
+/* DEV */
 $("checkDev").onclick=()=>{
   if($("devPass").value==="8923"){
     $("devPanel").style.display="block";
+    $("devMsg").textContent="Доступ открыт";
+  } else {
+    $("devMsg").textContent="Неверный пароль";
   }
 };
 
@@ -169,3 +148,16 @@ $("giveMillion").onclick=()=>{
   score+=1000000;
   save(); update();
 };
+
+/* МОДАЛКИ */
+$("openShop").onclick=()=>$("shop").classList.add("show");
+$("closeShop").onclick=()=>$("shop").classList.remove("show");
+$("openSettings").onclick=()=>$("settings").classList.add("show");
+$("closeSettings").onclick=()=>$("settings").classList.remove("show");
+
+/* АВТОСТАРТ */
+if(currentUser){
+  load(); update();
+  $("loginScreen").classList.remove("show");
+  $("playerName").textContent=currentUser;
+}
