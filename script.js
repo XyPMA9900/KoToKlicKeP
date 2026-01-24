@@ -84,6 +84,10 @@ cat.onclick = () => {
 openShopBtn.onclick = () => shop.classList.add("show");
 closeShopBtn.onclick = () => shop.classList.remove("show");
 
+/* НАСТРОЙКИ типа */
+openSettingsBtn.onclick = () => settings.classList.add("show");
+closeSettingsBtn.onclick = () => settings.classList.remove("show");
+
 /* ТОВАРЫ */
 upgradeBtn.onclick = () => buy(10*clickPower, ()=>clickPower++);
 autoBtn.onclick = () => buy(50*(autoClickers+1), ()=>autoClickers++);
