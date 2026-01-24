@@ -101,6 +101,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "ТУТ_ТВОЙ_API_KEY",
+    authDomain: "kotoklikep-game.firebaseapp.com",
+    databaseURL: "https://kotoklikep-game-default-rtdb.firebaseio.com",
+    projectId: "kotoklikep-game",
+    storageBucket: "kotoklikep-game.appspot.com",
+    messagingSenderId: "1066435401451",
+    appId: "1:1066435401451:web:..."
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
 <script src="script.js"></script>
 </body>
 </html>
