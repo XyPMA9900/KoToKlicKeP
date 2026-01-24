@@ -1,3 +1,11 @@
+input {
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
 html, body {
   margin: 0;
   height: 100%;
