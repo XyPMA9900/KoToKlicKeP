@@ -106,7 +106,7 @@ $("loginBtn").onclick=()=>{
   const p=$("loginPass").value;
   if(!accounts[n]) accounts[n]={password:p};
   if(accounts[n].password!==p){
-    $("loginMsg").textContent="Неверный пароль";
+    $("loginMsg").textContent="❌Неверный пароль❌";
     return;
   }
   currentUser=n;
@@ -128,6 +128,30 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn.onclick = ()=>{
   localStorage.removeItem("currentUser");
   location.reload();
+};
+
+deleteAccountBtn.onclick = ()=>{
+  if(confirm("Ты точно хочешь удалить аккаунт НАВСЕГДА? 😿")){
+    
+    // удалить локальный аккаунт
+    delete accounts[currentUser];
+    localStorage.setItem("accounts",JSON.stringify(accounts));
+
+    // удалить данные в firebase
+    if(ONLINE){
+      db.ref("users/"+currentUser).remove();
+    }
+
+    // очистить локальные сохранения
+    localStorage.removeItem("score");
+    localStorage.removeItem("clickPower");
+    localStorage.removeItem("autoClickers");
+    localStorage.removeItem("critChance");
+    localStorage.removeItem("passiveMultiplier");
+
+    localStorage.removeItem("currentUser");
+    location.reload();
+  }
 };
 
 $("openShop").onclick=()=>$("shop").classList.add("show");
