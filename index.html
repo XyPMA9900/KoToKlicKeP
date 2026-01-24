@@ -73,11 +73,11 @@
 <!-- KAZINO -->
 <div id="kazino" class="modal">
   <div class="modal-box">
-    <h2>🎰 Рыбный Казик</h2>
+    <h2>🎰 Kazik</h2>
 
-    <input id="kazinoBet" placeholder="ставку введите сюда 🐟">
+    <input id="kazinoBet" placeholder="Ставку введите сюда">
 
-    <div class="kazino-grid">
+    <div id="kazinoModes">
       <button data-kazino="0">☠️ ULTRAHARDER</button>
       <button data-kazino="1">☠️ ULTRAHARD</button>
       <button data-kazino="2">HARD</button>
@@ -90,13 +90,8 @@
       <button data-kazino="9">PROBNIK</button>
     </div>
 
-    <p id="kazinoResult"></p>
+    <p id="kazinoResult">Выбери режим и ставку</p>
 
-    <button onclick="document.getElementById('kazino').classList.remove('show')">
-      Закрыть
-    </button>
+    <button id="closeKazino">Закрыть</button>
   </div>
 </div>
-
-<!-- кнопка открытия -->
-<button id="openKazino">🎰 Казик</button>
