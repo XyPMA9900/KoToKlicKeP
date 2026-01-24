@@ -118,10 +118,18 @@ $("logoutBtn").onclick=()=>{
 /* УДАЛЕНИЕ */
 $("deleteAccountBtn").onclick=()=>{
   if(confirm("Удалить аккаунт НАВСЕГДА?")){
+    
+    // удалить аккаунт
     delete accounts[currentUser];
-    localStorage.setItem("accounts",JSON.stringify(accounts));
-    localStorage.removeItem("save_"+currentUser);
+    localStorage.setItem("accounts", JSON.stringify(accounts));
+
+    // удалить сохранение ИГРЫ
+    localStorage.removeItem("save_" + currentUser);
+
+    // выйти
     localStorage.removeItem("currentUser");
+
+    alert("Аккаунт полностью удалён 😿");
     location.reload();
   }
 };
