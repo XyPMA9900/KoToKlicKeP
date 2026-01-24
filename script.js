@@ -123,6 +123,13 @@ if(currentUser){
   $("playerName").textContent=currentUser;
 }
 
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.onclick = ()=>{
+  localStorage.removeItem("currentUser");
+  location.reload();
+};
+
 $("openShop").onclick=()=>$("shop").classList.add("show");
 $("closeShop").onclick=()=>$("shop").classList.remove("show");
 $("openSettings").onclick=()=>$("settings").classList.add("show");
