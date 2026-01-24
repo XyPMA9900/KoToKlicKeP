@@ -69,3 +69,34 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+<!-- KAZINO -->
+<div id="kazino" class="modal">
+  <div class="modal-box">
+    <h2>🎰 Рыбный Казик</h2>
+
+    <input id="kazinoBet" placeholder="ставку введите сюда 🐟">
+
+    <div class="kazino-grid">
+      <button data-kazino="0">☠️ ULTRAHARDER</button>
+      <button data-kazino="1">☠️ ULTRAHARD</button>
+      <button data-kazino="2">HARD</button>
+      <button data-kazino="3">RISK&RICH</button>
+      <button data-kazino="4">RISK</button>
+      <button data-kazino="5">NORMALLY+</button>
+      <button data-kazino="6">PASHALKO</button>
+      <button data-kazino="7">EZ WIN</button>
+      <button data-kazino="8">NORMALLY</button>
+      <button data-kazino="9">PROBNIK</button>
+    </div>
+
+    <p id="kazinoResult"></p>
+
+    <button onclick="document.getElementById('kazino').classList.remove('show')">
+      Закрыть
+    </button>
+  </div>
+</div>
+
+<!-- кнопка открытия -->
+<button id="openKazino">🎰 Казик</button>
