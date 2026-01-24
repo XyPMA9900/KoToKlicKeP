@@ -2,6 +2,11 @@ alert("JS ЗАГРУЗИЛСЯ");
 
 const $ = id => document.getElementById(id);
 
+const on = (id, fn) => {
+  const el = $(id);
+  if(el) el.onclick = fn;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
 
 $("openShop").onclick = () => {
