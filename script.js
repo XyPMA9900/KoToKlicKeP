@@ -1,3 +1,4 @@
+window.onload = () => {
 const $ = id => document.getElementById(id);
 
 let accounts = JSON.parse(localStorage.getItem("accounts")) || {};
@@ -235,4 +236,6 @@ kazinoButtons.forEach(btn=>{
 /* открыть казик */
 document.getElementById("openKazino").onclick = ()=>{
   document.getElementById("kazino").classList.add("show");
+};
+
 };
