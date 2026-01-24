@@ -37,6 +37,10 @@ html, body {
   transition: transform 0.1s;
 }
 
+#cat:active {
+  transform: scale(0.85);
+}
+
 #cat.active {
   transform: scale(0.9);
 }
