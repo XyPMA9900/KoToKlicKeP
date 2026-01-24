@@ -103,6 +103,7 @@ setInterval(()=>{
 /* ===== ЛОГИН ===== */
 if($("loginBtn")){
   $("loginBtn").onclick=()=>{
+    alert("КНОПКА НАЖАЛАСЬ");
     const n=$("loginName").value.trim();
     const p=$("loginPass").value.trim();
 
