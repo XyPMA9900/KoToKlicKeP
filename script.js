@@ -78,10 +78,6 @@ $("cat").onclick = ()=>{
     cat.classList.remove("active");
   },200);
 };
-  $("cat").classList.add("active");
-  setTimeout(()=>$("cat").classList.remove("active"),100);
-  save(); update();
-};
 
 setInterval(()=>{
   score+=autoClickers*passiveMultiplier;
