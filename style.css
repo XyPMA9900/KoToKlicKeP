@@ -5,7 +5,6 @@ html, body {
   font-family: Arial;
   background: #f5f5f5;
   user-select: none;
-  touch-action: manipulation;
 }
 
 #app {
@@ -17,20 +16,13 @@ html, body {
 }
 
 #score {
-  font-size: 72px;
-  margin-bottom: 20px;
+  font-size: 64px;
   font-weight: bold;
-  text-align: center;
-}
-
-@media (max-width: 400px) {
-  #score { font-size: 56px; }
 }
 
 #cat {
-  font-size: 280px;
+  font-size: 260px;
   cursor: pointer;
-  transition: transform 0.1s;
 }
 
 #cat.active {
@@ -38,19 +30,13 @@ html, body {
 }
 
 button {
-  font-size: 22px;
-  padding: 10px 18px;
+  font-size: 20px;
+  padding: 10px 16px;
   margin: 6px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: none;
-  cursor: pointer;
 }
 
-button:active {
-  transform: scale(0.95);
-}
-
-/* МОДАЛКИ */
 .modal {
   position: fixed;
   inset: 0;
@@ -60,7 +46,6 @@ button:active {
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: 0.25s ease;
 }
 
 .modal.show {
@@ -71,21 +56,6 @@ button:active {
 .modal-box {
   background: white;
   padding: 20px;
-  border-radius: 16px;
+  border-radius: 14px;
   text-align: center;
-  max-height: 90vh;
-  overflow-y: auto;
-  transform: scale(0.8);
-  transition: 0.25s ease;
-}
-
-.modal.show .modal-box {
-  transform: scale(1);
-}
-
-input {
-  font-size: 18px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
