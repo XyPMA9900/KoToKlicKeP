@@ -89,3 +89,33 @@ button:active {
 .modal.show .modal-box {
   transform: scale(1);
 }
+
+/* === KAZINO === */
+
+#kazino input {
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 80%;
+  text-align: center;
+}
+
+.kazino-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.kazino-grid button {
+  background: linear-gradient(135deg,#222,#555);
+  color: white;
+  font-size: 14px;
+}
+
+#kazinoResult {
+  font-size: 20px;
+  margin: 10px;
+  min-height: 30px;
+}
