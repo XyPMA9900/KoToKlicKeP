@@ -42,11 +42,11 @@ function save(){
 }
 function load(){
   let d = JSON.parse(localStorage.getItem("save"));
-  if(d){
-    score=d.score;
-    clickPower=d.clickPower;
-    auto=d.auto;
-  }
+  if(!d) return;
+
+  score = Number(d.score) || 0;
+  clickPower = Number(d.clickPower) || 1;
+  auto = Number(d.auto) || 0;
 }
 
 /* ===== UI ===== */
