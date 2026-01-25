@@ -1,9 +1,29 @@
-alert("JS ЗАГРУЗИЛСЯ");
+let b1 = document.getElementById("b1");
 
-const btn = document.getElementById("loginBtn");
-const text = document.getElementById("text");
+let scoreText = document.getElementById("score");
 
-btn.onclick = function () {
-  alert("КНОПКА НАЖАТА");
-  text.textContent = "ВОШЁЛ";
-};
+let score=(0)
+    
+let clkpower=(0)
+  
+let lvl=(1)
+  
+let autoclik=(0)
+
+
+
+b1.onclick = () => {
+  
+  b1.style.transform = "scale(0.5)";
+
+setTimeout(() => {
+
+  b1.style.transform = "scale(1)";
+
+}, 100);
+  
+  scoreText.textContent = score;
+  
+  score += 1;
+  
+  };
