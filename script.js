@@ -1,3 +1,5 @@
+window.onload = () => {
+
 const $ = id => document.getElementById(id);
 
 /* ===== GAME ===== */
@@ -233,3 +235,5 @@ $("closeShop").onclick=()=>$("shop").classList.remove("show");
 /* ===== START ===== */
 load();
 update();
+
+};
