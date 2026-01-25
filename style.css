@@ -21,7 +21,7 @@ html, body {
 }
 
 #cat {
-  font-size: 120px;
+  font-size: 240px;
   cursor: pointer;
   transition: transform 0.1s;
   user-select: none;
