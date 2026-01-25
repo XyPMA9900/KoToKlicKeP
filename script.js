@@ -135,13 +135,18 @@ function save(){
   }));
 }
 
+let score = 0;
+let clickPower = 1;
+let autoPower = 0;
+
 function load(){
   let d = JSON.parse(localStorage.getItem("save"));
   if(!d) return;
-  score=d.score;
-  clickPower=d.clickPower;
-  autoPower=d.autoPower;
-  d.items.forEach((c,i)=>items[i].count=c);
+
+  score = d.score;
+  clickPower = d.clickPower;
+  autoPower = d.autoPower;
+  d.items.forEach((c,i)=>items[i].count = c);
 }
 
 /* ===== UI ===== */
