@@ -3,16 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>KotoClicker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div id="score">0</div>
+<div id="app">
+  <div id="score">0 🐟</div>
+  <button id="cat">🐱</button>
 
-  <button id="b1">🐱</button>
+  <button id="openShop">🛒 Магазин</button>
+</div>
 
-  <div id="plus">+1</div>
+<!-- SHOP -->
+<div id="shop" class="modal">
+  <div class="modal-box">
+    <h2>Магазин</h2>
+    <div id="shopItems"></div>
+    <button id="closeShop">Закрыть</button>
+  </div>
+</div>
 
-  <script src="script.js"></script>
+<!-- ITEM MODAL -->
+<div id="itemModal" class="modal">
+  <div class="modal-box">
+    <h3 id="itemName"></h3>
+    <p id="itemDesc"></p>
+    <p>Цена: <span id="itemPrice"></span></p>
+
+    <div id="itemCountBox">
+      <button id="minus">-</button>
+      <span id="itemCount">1</span>
+      <button id="plus">+</button>
+    </div>
+
+    <button id="buyItem">Купить</button>
+    <button id="closeItem">Отмена</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
