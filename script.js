@@ -66,3 +66,35 @@ load();
 update();
 
 };
+
+let score = 0;
+let clickPower = 1;
+
+let scoreText = document.getElementById("score");
+let cat = document.getElementById("cat");
+let shop = document.getElementById("shop");
+let buyClick = document.getElementById("buyClick");
+let openShop = document.getElementById("openShop");
+
+// клик по коту
+cat.onclick = () => {
+  score += clickPower;
+  scoreText.textContent = score + " 🐟";
+};
+
+// открыть магазин
+openShop.onclick = () => {
+  shop.style.display = "block";
+};
+
+// покупка
+buyClick.onclick = () => {
+  if (score >= 10) {
+    score -= 10;
+    clickPower += 1;
+    scoreText.textContent = score + " 🐟";
+    alert("Клик стал сильнее!");
+  } else {
+    alert("Не хватает рыб!");
+  }
+};
