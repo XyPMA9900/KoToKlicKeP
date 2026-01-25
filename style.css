@@ -129,3 +129,11 @@ html, body {
 .modal.active .modal-box {
   transform: scale(1);
 }
+
+button {
+  transition: 0.1s;
+}
+
+button:active {
+  transform: scale(0.95);
+}
