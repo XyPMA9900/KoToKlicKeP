@@ -1,65 +1,31 @@
 body {
   margin: 0;
-  font-family: Arial;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #5a30e6;
   color: white;
+  font-family: sans-serif;
 }
 
 #app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 #score {
-  font-size: 48px;
+  font-size: 32px;
   margin-bottom: 20px;
 }
 
 #cat {
-  font-size: 200px;
+  font-size: 100px;
   cursor: pointer;
-  transition: 0.1s;
-}
-
-#cat:active {
-  transform: scale(0.9);
+  user-select: none;
 }
 
 button {
+  margin-top: 20px;
+  padding: 10px 20px;
   font-size: 18px;
-  padding: 10px 16px;
-  margin: 6px;
-  border-radius: 10px;
-  border: none;
-}
-
-/* MODALS */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.2s;
-}
-
-.modal.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal-box {
-  background: white;
-  color: black;
-  padding: 20px;
-  border-radius: 14px;
-  min-width: 250px;
-  text-align: center;
 }
