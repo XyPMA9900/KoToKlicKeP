@@ -1,118 +1,62 @@
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:sans-serif;
-}
-
-body {
-  background:#5b3df5;
-  color:white;
-  height:100vh;
-  overflow:hidden;
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial;
+  background: #5a30e6;
+  color: white;
 }
 
 #app {
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #score {
-  font-size:32px;
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 #cat {
-  font-size:80px;
-  cursor:pointer;
-  transition:0.1s;
+  font-size: 180px;
+  cursor: pointer;
+  transition: transform 0.1s;
 }
 
 button {
-  padding:12px 20px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
+  font-size: 18px;
+  padding: 10px 16px;
+  margin: 6px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: black;
 }
 
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.4);
-  display:none;
-  justify-content:center;
-  align-items:center;
+button:active {
+  transform: scale(0.95);
 }
 
-.modal.show {
-  display:flex;
-}
-
-.modal-box {
-  background:white;
-  color:black;
-  padding:25px;
-  border-radius:16px;
-  min-width:260px;
-  text-align:center;
-  animation:pop 0.2s;
-}
-
-@keyframes pop {
-  from {transform:scale(0.8); opacity:0;}
-  to {transform:scale(1); opacity:1;}
-}
-
-.shop-item {
-  background:#eee;
-  margin:10px 0;
-  padding:12px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-#countBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: 12px 0;
-}
-
-#itemCount {
-  font-size: 20px;
-  min-width: 24px;
-  text-align: center;
-}
-
-html, body {
-  overscroll-behavior: none;
-  touch-action: none;
-}
-
-* {
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
+/* ===== MODALS ===== */
 
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: 0.2s;
+  transition: 0.25s;
 }
 
-.modal.active {
+.modal.show {
   opacity: 1;
   pointer-events: auto;
 }
@@ -120,24 +64,37 @@ html, body {
 .modal-box {
   background: white;
   color: black;
-  padding: 24px;
+  padding: 20px;
   border-radius: 16px;
+  text-align: center;
+  min-width: 250px;
   transform: scale(0.8);
-  transition: 0.2s;
+  transition: 0.25s;
 }
 
-.modal.active .modal-box {
+.modal.show .modal-box {
   transform: scale(1);
 }
 
-button {
-  transition: 0.1s;
+/* SHOP */
+
+#shopItems button {
+  width: 100%;
+  margin: 4px 0;
 }
 
-button:active {
-  transform: scale(0.95);
+/* ITEM MODAL */
+
+.count-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
 }
 
-.hidden {
-  display: none;
+.count-box span {
+  font-size: 24px;
+  min-width: 30px;
+  text-align: center;
 }
