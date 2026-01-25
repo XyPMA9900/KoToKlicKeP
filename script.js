@@ -94,8 +94,10 @@ function openItem(i){
   $("itemPrice").textContent=currentItem.price;
   $("itemCount").textContent=1;
 
-  $("countBox").style.display =
-    currentItem.single ? "none":"flex";
+$("countBox").classList.toggle(
+  "hidden",
+  currentItem.single
+);
 
   $("itemModal").classList.add("show");
 }
