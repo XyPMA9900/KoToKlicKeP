@@ -63,7 +63,7 @@ const items = [
     }
   },
   {
-    name:"🧠 Интеллект",
+    name:"🧠 улучшение ИИ",
     desc:"x2 автоклики",
     baseCost:800,
     count:0,
@@ -96,7 +96,7 @@ const items = [
     }
   },
   {
-    name:"🕰 Хронос",
+    name:"🕰 superComputer",
     desc:"x3 автоклики",
     baseCost:6000,
     count:0,
@@ -109,7 +109,7 @@ const items = [
   {
     name:"👑 Бог котов",
     desc:"x5 ко всему",
-    baseCost:15000,
+    baseCost:25000,
     count:0,
     single:true,
     buy(){
