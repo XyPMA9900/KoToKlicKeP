@@ -4,21 +4,20 @@ const $ = id => document.getElementById(id);
 let score = 0;
 let clickPower = 1;
 let auto = 0;
-
 let clickLock = false;
 
-/* ===== ITEMS ===== */
+/* ===== ITEMS (10) ===== */
 const items = [
-  {name:"👆🏻Клик +1", cost:10, desc:"+1 к клику", single:false, buy:(n)=>clickPower+=n},
-  {name:"🤖Авто", cost:50, desc:"+1 в секунду", single:false, buy:(n)=>auto+=n},
-  {name:"💥Крит", cost:100, desc:"x2 шанс", single:true, buy:()=>{}},
-  {name:"⏩Буст", cost:200, desc:"x2 клики", single:true, buy:()=>{}},
-  {name:"😼Супер кот", cost:300, desc:"+5 к клику", single:true, buy:()=>clickPower+=5},
-  {name:"🏅Золото", cost:400, desc:"+100 рыб", single:false, buy:(n)=>score+=100*n},
-  {name:"💪🏻Мега", cost:500, desc:"x2 клики навсегда", single:true, buy:()=>clickPower*=2},
-  {name:"⏳Пассив", cost:600, desc:"x2 авто", single:true, buy:()=>auto*=2},
-  {name:"кот-"coolscamer3000"", cost:6799, desc:"???", single:true, buy:()=>score+=1000},
-  {name:"🧪бот-"chatGPT"", cost:9999, desc:"майнит 1500 рыбок/сек", single:true, buy:()=>score+=100000}
+  {name:"👆 Клик +1", cost:10, desc:"+1 к клику", single:false, buy:(n)=>clickPower+=n},
+  {name:"🤖 Авто", cost:50, desc:"+1 в секунду", single:false, buy:(n)=>auto+=n},
+  {name:"💥 Крит", cost:100, desc:"Шанс x2 (пока просто фейк)", single:true, buy:()=>{}},
+  {name:"⏩ Буст", cost:200, desc:"Временно x2 клики (фейк)", single:true, buy:()=>{}},
+  {name:"😼 Супер кот", cost:300, desc:"+5 к клику", single:true, buy:()=>clickPower+=5},
+  {name:"🏅 Золото", cost:400, desc:"+100 рыб", single:false, buy:(n)=>score+=100*n},
+  {name:"💪 Мега", cost:500, desc:"Навсегда x2 клики", single:true, buy:()=>clickPower*=2},
+  {name:"⏳ Пассив", cost:600, desc:"Навсегда x2 авто", single:true, buy:()=>auto*=2},
+  {name:"🐱 coolscamer3000", cost:6799, desc:"Секретный кот", single:true, buy:()=>score+=1000},
+  {name:"🤖 chatGPT", cost:9999, desc:"+1500 рыб/сек", single:true, buy:()=>auto+=1500}
 ];
 
 /* ===== SAVE ===== */
@@ -29,9 +28,9 @@ function save(){
 function load(){
   let d = JSON.parse(localStorage.getItem("save"));
   if(d){
-    score=d.score;
-    clickPower=d.clickPower;
-    auto=d.auto;
+    score = d.score;
+    clickPower = d.clickPower;
+    auto = d.auto;
   }
 }
 
@@ -47,7 +46,8 @@ $("cat").onclick = ()=>{
   clickLock = true;
 
   score += clickPower;
-  update(); save();
+  update(); 
+  save();
 
   $("cat").style.transform="scale(0.9)";
   setTimeout(()=>{
@@ -59,16 +59,18 @@ $("cat").onclick = ()=>{
 /* ===== AUTO ===== */
 setInterval(()=>{
   score += auto;
-  update(); save();
+  update(); 
+  save();
 },1000);
 
 /* ===== SHOP ===== */
 function renderShop(){
   let box = $("shopItems");
   box.innerHTML="";
+
   items.forEach((it,i)=>{
     let div = document.createElement("div");
-    div.className="shop-item"+(score<it.cost?" locked":"");
+    div.className = "shop-item"+(score<it.cost?" locked":"");
     div.textContent = it.name+" ("+it.cost+")";
     div.onclick = ()=>openItem(i);
     box.appendChild(div);
@@ -114,7 +116,8 @@ $("buyItem").onclick = ()=>{
   currentItem.buy(currentCount);
 
   $("itemModal").classList.remove("show");
-  update(); save();
+  update(); 
+  save();
 };
 
 $("closeItem").onclick = ()=>{
