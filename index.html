@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta charset="UTF-8">
-  <title>KotoClicker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KotoClicker 🐱</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="app">
   <div id="score">0 🐟</div>
-  <div id="cat">😺</div>
+  <div id="cat">🐱</div>
+
   <button id="openShop">🛒 Магазин</button>
 </div>
 
@@ -29,19 +30,19 @@
     <h2 id="itemName"></h2>
     <p id="itemDesc"></p>
 
-    <div id="countBox">
+    <div id="countBox" class="count-box">
       <button id="minus">-</button>
       <span id="itemCount">1</span>
       <button id="plus">+</button>
     </div>
 
-    <div>Цена: <span id="itemPrice"></span> 🐟</div>
+    <p>Цена: <b><span id="itemPrice"></span> 🐟</b></p>
 
     <button id="buyItem">Купить</button>
-    <button onclick="closeItem()">Отмена</button>
+    <button id="closeItem">Закрыть</button>
   </div>
 </div>
 
-<script src="script.js" defer></script>
+<script src="script.js"></script>
 </body>
 </html>
