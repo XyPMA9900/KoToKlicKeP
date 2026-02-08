@@ -1,241 +1,269 @@
-// =============================
-// 🧠 SAFE CORE
-// =============================
-
-const $ = (id) => document.getElementById(id);
-
-function safeNum(v, def = 0) {
-  v = Number(v);
-  return isNaN(v) || !isFinite(v) ? def : v;
-}
-
-// =============================
-// 📦 STATE
-// =============================
-
-const state = {
-  score: 0,
-  clickPower: 1,
-  autoPower: 0
-};
-
-// =============================
-// 💾 SAVE / LOAD (ANTI-CORRUPT)
-// =============================
-
-function save() {
-  try {
-    localStorage.setItem("kotoSave", JSON.stringify(state));
-  } catch (e) {
-    console.warn("Save error:", e);
-  }
-}
-
-function load() {
-  try {
-    const data = JSON.parse(localStorage.getItem("kotoSave"));
-    if (!data) return;
-
-    state.score = safeNum(data.score, 0);
-    state.clickPower = safeNum(data.clickPower, 1);
-    state.autoPower = safeNum(data.autoPower, 0);
-  } catch (e) {
-    console.warn("Load error:", e);
-  }
-}
-
-// =============================
-// 🔄 UPDATE
-// =============================
-
-function update() {
-  if ($("score")) {
-    $("score").textContent = state.score + " 🐟";
-  }
-
-  renderShop();
-  renderKazino();
-  save();
-}
-
-// =============================
-// 🐱 CLICK
-// =============================
-
-if ($("cat")) {
-  $("cat").addEventListener("click", () => {
-    state.score += state.clickPower;
-    update();
-  });
-}
-
-// =============================
-// 🤖 AUTO
-// =============================
-
-setInterval(() => {
-  if (state.autoPower > 0) {
-    state.score += state.autoPower;
-    update();
-  }
-}, 1000);
-
-// =============================
-// 🛒 SHOP
-// =============================
-
-const shopItems = [
   {
-    name: "Улучшить клик",
-    desc: "+1 к силе клика",
-    price: 50,
-    buy() {
-      state.clickPower += 1;
-      this.price = Math.floor(this.price * 1.4);
+    name:"⚡ Турбо",
+    desc:"x2 клики",
+    baseCost:500,
+    count:0,
+    single:true,
+    buy(){
+      clickPower *= 2;
+      this.count = 1;
     }
   },
   {
-    name: "Автоклик",
-    desc: "+1 рыба в секунду",
-    price: 100,
-    buy() {
-      state.autoPower += 1;
-      this.price = Math.floor(this.price * 1.6);
+    name:"🧠 улучшение ИИ",
+    desc:"x2 автоклики",
+    baseCost:800,
+    count:0,
+    single:true,
+    buy(){
+      autoPower *= 2;
+      this.count = 1;
+    }
+  },
+  {
+    name:"😼 Супер кот",
+    desc:"+50 к клику",
+    baseCost:1500,
+    count:0,
+    single:true,
+    buy(){
+      clickPower += 50;
+      this.count = 1;
+    }
+  },
+  {
+    name:"🚀 Ракета",
+    desc:"x3 клики",
+    baseCost:4000,
+    count:0,
+    single:true,
+    buy(){
+      clickPower *= 3;
+      this.count = 1;
+    }
+  },
+  {
+    name:"🕰 superComputer",
+    desc:"x3 автоклики",
+    baseCost:6000,
+    count:0,
+    single:true,
+    buy(){
+      autoPower *= 3;
+      this.count = 1;
+    }
+  },
+  {
+    name:"👑 Бог котов",
+    desc:"x5 ко всему",
+    baseCost:25000,
+    count:0,
+    single:true,
+    buy(){
+      clickPower *= 5;
+      autoPower *= 5;
+      this.count = 1;
     }
   }
 ];
 
-function renderShop() {
-  const box = $("shopItems");
-  if (!box) return;
+/* ===== PRICE WITH SCALING ===== */
+function getPrice(item){
+  return Math.floor(item.baseCost * Math.pow(1.4, item.count));
+}
 
-  box.innerHTML = "";
+/* === KAZINO === */
 
-  shopItems.forEach((item) => {
-    if (!item || safeNum(item.price) <= 0) return;
+const kazino = {
+  modes: [
+    {name:"☠️ ULTRAHARDER ☠️", chance:0.000001, mult:1000000},
+    {name:"☠️ ULTRAHARD ☠️",   chance:0.0001,   mult:1000},
+    {name:"HARD",            chance:0.01,     mult:500},
+    {name:"RISK&RICH",       chance:0.05,     mult:200},
+    {name:"RISK",            chance:0.15,     mult:180},
+    {name:"NORMALLY+",       chance:0.20,     mult:150},
+    {name:"PASHALKO",        chance:0.67,     mult:14, x2chance:0.88},
+    {name:"EZ WIN",          chance:0.65,     mult:2},
+    {name:"NORMALLY",        chance:0.50,     mult:3},
+    {name:"PROBNIK",         chance:0.50,     mult:1, test:true}
+  ]
+};
 
-    const div = document.createElement("div");
-    const canBuy = state.score >= item.price;
+// элементы
+const kazinoInput  = document.getElementById("kazinoBet");
+const kazinoResult = document.getElementById("kazinoResult");
+const kazinoBtns   = document.querySelectorAll("[data-kazino]");
 
-    div.innerHTML = `
-      <b>${item.name}</b><br>
-      <small>${item.desc}</small><br>
-      Цена: ${item.price} 🐟<br>
-      <button ${canBuy ? "" : "disabled"}>Купить</button>
-    `;
+// логика режимов
+kazinoBtns.forEach(btn=>{
+  btn.onclick = ()=>{
+    const mode = kazino.modes[btn.dataset.kazino];
+    const bet  = Number(kazinoInput.value);
 
-    div.querySelector("button").onclick = () => {
-      if (!canBuy) return;
+    if(!bet || bet <= 0){
+      kazinoResult.textContent = "Введите ставку!";
+      return;
+    }
 
-      state.score -= item.price;
+    if(score < bet){
+      kazinoResult.textContent = "Не хватает рыб 🐟";
+      return;
+    }
 
-      try {
-        item.buy();
-      } catch (e) {
-        console.warn("Shop buy error:", e);
+    // ПРОБНИК
+    if(mode.test){
+      kazinoResult.textContent =
+        Math.random() < 0.5
+        ? "✔️ ПРОБНИК: выиграл, но ничего не дали"
+        : "❌ ПРОБНИК: проиграл, но ничего не забрали";
+      return;
+    }
+
+    // обычные режимы
+    score -= bet;
+
+    if(Math.random() < mode.chance){
+      let win = bet * mode.mult;
+
+      // пасхалка x2
+      if(mode.x2chance && Math.random() < mode.x2chance){
+        win *= 2;
+        kazinoResult.textContent = "✨ X2 ПАСХАЛКА! +" + win;
+      } else {
+        kazinoResult.textContent = "✔️ ВЫИГРЫШ +" + win;
       }
 
-      update();
-    };
-
-    box.appendChild(div);
-  });
-}
-
-// =============================
-// 🎰 KAZINO
-// =============================
-
-const kazinoModes = [
-  { name: "PROBNIK", desc: "50% шанс x2", chance: 0.5, mult: 2 },
-  { name: "RISK", desc: "20% шанс x5", chance: 0.2, mult: 5 },
-  { name: "ULTRA", desc: "5% шанс x20", chance: 0.05, mult: 20 }
-];
-
-function playKazino(index) {
-  const betInput = $("kazinoBet");
-  const result = $("kazinoResult");
-
-  if (!betInput || !result) return;
-
-  const bet = safeNum(betInput.value, 0);
-
-  if (bet <= 0) {
-    result.textContent = "Введите нормальную ставку!";
-    return;
-  }
-
-  if (bet > state.score) {
-    result.textContent = "Недостаточно рыб!";
-    return;
-  }
-
-  const mode = kazinoModes[index];
-  if (!mode) return;
-
-  state.score -= bet;
-
-  try {
-    if (Math.random() < mode.chance) {
-      const win = bet * mode.mult;
-      state.score += win;
-      result.textContent = `ВЫИГРЫШ x${mode.mult} (+${win})`;
+      score += win;
     } else {
-      result.textContent = "Проигрыш ☠️";
+      kazinoResult.textContent = "❌ ПРОИГРЫШ -" + bet;
     }
-  } catch (e) {
-    console.warn("Kazino error:", e);
-  }
 
-  update();
+    save();
+    update();
+  };
+});
+
+// открыть / закрыть
+document.getElementById("openKazino").onclick = ()=>{
+  document.getElementById("kazino").classList.add("show");
+};
+
+document.getElementById("closeKazino").onclick = ()=>{
+  document.getElementById("kazino").classList.remove("show");
+};
+
+/* ===== SAVE ===== */
+function save(){
+  localStorage.setItem("save", JSON.stringify({
+    score, clickPower, autoPower,
+    items: items.map(i=>i.count)
+  }));
 }
 
-function renderKazino() {
-  const box = $("kazinoModes");
-  if (!box) return;
+let score = 0;
+let clickPower = 1;
+let autoPower = 0;
 
-  box.innerHTML = "";
+function load(){
+  let d = JSON.parse(localStorage.getItem("save"));
+  if(!d) return;
 
-  kazinoModes.forEach((mode, i) => {
-    if (!mode) return;
+  score = d.score;
+  clickPower = d.clickPower;
+  autoPower = d.autoPower;
+  d.items.forEach((c,i)=>items[i].count = c);
+}
 
-    const div = document.createElement("div");
+/* ===== UI ===== */
+function update(){
+  $("score").textContent = score+" 🐟";
+  renderShop();
+}
 
-    div.innerHTML = `
-      <b>${mode.name}</b><br>
-      <small>${mode.desc}</small><br>
-      <button>Играть</button>
-    `;
+/* ===== CAT ===== */
+$("cat").onclick = ()=>{
+  score += clickPower;
+  update(); save();
+  $("cat").style.transform="scale(0.9)";
+  setTimeout(()=>$("cat").style.transform="scale(1)",100);
+};
 
-    div.querySelector("button").onclick = () => {
-      playKazino(i);
-    };
+/* ===== AUTO ===== */
+setInterval(()=>{
+  score += autoPower;
+  update(); save();
+},1000);
 
-    box.appendChild(div);
+/* ===== SHOP LIST ===== */
+function renderShop(){
+  let box = $("shopItems");
+  box.innerHTML="";
+  items.forEach((it,i)=>{
+    let btn = document.createElement("button");
+    let price = getPrice(it);
+    btn.textContent = `${it.name} (${price} 🐟)`;
+    btn.onclick = ()=>openItem(i);
+    if(it.single && it.count>0) btn.disabled=true;
+    box.appendChild(btn);
   });
 }
 
-// =============================
-// 🪟 MODALS (SAFE)
-// =============================
+/* ===== ITEM MODAL ===== */
+let currentItem=null;
+let currentCount=1;
 
-function safeOpen(id) {
-  if ($(id)) $(id).style.display = "flex";
+function openItem(i){
+  currentItem = items[i];
+  currentCount = 1;
+
+  $("itemName").textContent=currentItem.name;
+  $("itemDesc").textContent=currentItem.desc;
+  $("itemCount").textContent=1;
+  $("itemPrice").textContent=getPrice(currentItem);
+
+  $("countBox").style.display =
+    currentItem.single ? "none":"flex";
+
+  $("itemModal").classList.add("show");
 }
 
-function safeClose(id) {
-  if ($(id)) $(id).style.display = "none";
-}
+$("plus").onclick=()=>{
+  currentCount++;
+  $("itemCount").textContent=currentCount;
+  $("itemPrice").textContent =
+    getPrice(currentItem)*currentCount;
+};
 
-$("openShop")?.addEventListener("click", () => safeOpen("shop"));
-$("closeShop")?.addEventListener("click", () => safeClose("shop"));
+$("minus").onclick=()=>{
+  if(currentCount>1){
+    currentCount--;
+    $("itemCount").textContent=currentCount;
+    $("itemPrice").textContent =
+      getPrice(currentItem)*currentCount;
+  }
+};
 
-$("openKazino")?.addEventListener("click", () => safeOpen("kazino"));
-$("closeKazino")?.addEventListener("click", () => safeClose("kazino"));
+$("buyItem").onclick=()=>{
+  let total = getPrice(currentItem)*currentCount;
+  if(score<total) return alert("Мало рыбы!");
 
-// =============================
-// 🚀 INIT
-// =============================
+  score -= total;
+  currentItem.buy(currentCount);
 
+  $("itemModal").classList.remove("show");
+  update(); save();
+};
+
+$("closeItem").onclick=()=>{
+  $("itemModal").classList.remove("show");
+};
+
+/* ===== MODALS ===== */
+$("openShop").onclick=()=>$("shop").classList.add("show");
+$("closeShop").onclick=()=>$("shop").classList.remove("show");
+
+/* ===== START ===== */
 load();
 update();
+
+};
