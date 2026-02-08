@@ -1,42 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KotoClicker SSV</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KotoClicker 🐱</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="app">
-    <div id="score">0 🐟</div>
-    <div id="cat">🐱</div>
+  <div id="score">0 🐟</div>
+  <div id="cat">🐱</div>
 
-    <button id="openShop">🛒 Магазин</button>
-    <button id="openKazino">😈 KAZIK</button>
+  <button id="openShop">🛒 Магазин</button>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="modal">
-    <div class="modal-box">
-        <h2>Магазин</h2>
-        <div id="shopItems"></div>
-        <button id="closeShop">Закрыть</button>
-    </div>
+  <div class="modal-box">
+    <h2>Магазин</h2>
+    <div id="shopItems"></div>
+    <button id="closeShop">Закрыть</button>
+  </div>
 </div>
 
-<!-- KAZINO -->
+<!-- КАЗИК ЛЮБИМЫЙ -->
+
+<!-- КНОПКА ОТКРЫТИЯ -->
+<button id="openKazino">😈 KAZIK</button>
+
+<!-- МОДАЛКА КАЗИКА -->
 <div id="kazino" class="modal">
-    <div class="modal-box">
-        <h2>🎰 KAZIK</h2>
+  <div class="modal-box">
+    <h2>🎰 KAZIK</h2>
 
-        <input id="kazinoBet" placeholder="👉🏻Ставка👈🏻">
+    <input id="kazinoBet" placeholder="Ставку введите сюда">
 
-        <div id="kazinoModes"></div>
-
-        <p id="kazinoResult">👉🏻режим👈🏻</p>
-        <button id="closeKazino">Закрыть</button>
+    <div id="kazinoModes">
+      <button data-kazino="0">☠️ ULTRAHARDER</button>
+      <button data-kazino="1">☠️ ULTRAHARD</button>
+      <button data-kazino="2">HARD</button>
+      <button data-kazino="3">RISK&RICH</button>
+      <button data-kazino="4">RISK</button>
+      <button data-kazino="5">NORMALLY+</button>
+      <button data-kazino="6">PASHALKO</button>
+      <button data-kazino="7">EZ WIN</button>
+      <button data-kazino="8">NORMALLY</button>
+      <button data-kazino="9">PROBNIK</button>
     </div>
+
+    <p id="kazinoResult">Выбери режим и ставку</p>
+
+    <button id="closeKazino">Закрыть</button>
+  </div>
+</div>
+
+<!-- ITEM MODAL -->
+<div id="itemModal" class="modal">
+  <div class="modal-box">
+    <h2 id="itemName"></h2>
+    <p id="itemDesc"></p>
+
+    <div id="countBox" class="count-box">
+      <button id="minus">-</button>
+      <span id="itemCount">1</span>
+      <button id="plus">+</button>
+    </div>
+
+    <p>Цена: <b><span id="itemPrice"></span> 🐟</b></p>
+
+    <button id="buyItem">Купить</button>
+    <button id="closeItem">Закрыть</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
