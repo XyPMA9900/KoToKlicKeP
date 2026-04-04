@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>KoToKlicKeP</title>
+</head>
+
+<script>
+// СЧЕТА
+let clicks = 0;
+let lines = 0;
+let maxbar = 100;
+let lvl = 1;
+let costup1 = 10;
+let costup2 = 50;
+let costup3 = 100;
+let power = 1;
+let auto = 0;
+let costauto = 100;
+let costauto2 = 500;
+let stav = 50;
+// ВКЛ/ВЫКЛ
+let bstclck = false;
+let DevDOSTUP = false;
+// СОКРАЩЕНИЯ или КАСТОМ НАЗВАНИЯ
+let m = Math.random();
+let k = clicks;
+let firstclick = bstclck;
+let boostclick = bstclck;
+let DD = DevDOSTUP;
+let alert = openModal;
+
+function updateUI() {
+  const elClicks = document.getElementById("clicks");
+  const elLines = document.getElementById("lines");
+  const elBar = document.getElementById("bar");
+  const elLvl = document.getElementById("lvl");
+  const elLinesLvl = document.getElementById("lineslvl");
+  const elMaxBar = document.getElementById("maxbar");
+  const elPower = document.getElementById("power");
+  const elCost1 = document.getElementById("costup1");
+  const elCost2 = document.getElementById("costup2");
+  const elCost3 = document.getElementById("costup3");
+  const elCostauto = document.getElementById("costauto");
+  const elCostauto2 = document.getElementById("costauto2");
+  const elauto = document.getElementById("auto");
+  const ellineshp = document.getElementById("lineshp");
+  if (elClicks) elClicks.textContent = clicks;
+  if (elLines) elLines.textContent = lines;
+  if (elBar) {
+    elBar.value = lines;
+    elBar.max = maxbar;
+  }
+  if (elLvl) elLvl.textContent = lvl;
+  if (elLinesLvl) elLinesLvl.textContent = lines;
+  if (elMaxBar) elMaxBar.textContent = maxbar;
+  if (elPower) elPower.textContent = power;
+  if (elCost1) elCost1.textContent = costup1;
+  if (elCost2) elCost2.textContent = costup2;
+  if (elCost3) elCost3.textContent = costup3;
+  if (elCostauto) elCostauto.textContent = costauto;
+  if (elCostauto2) elCostauto2.textContent = costauto2;
+  if (elauto) elauto.textContent = auto;
+  if (ellineshp) ellineshp.textContent = lines;
+
+  localStorage.setItem("clicks", clicks);
+  localStorage.setItem("lines", lines);
+  localStorage.setItem("power", power);
+  localStorage.setItem("lvl", lvl);
+  localStorage.setItem("auto", auto);
+  localStorage.setItem("costup1", costup1);
+  localStorage.setItem("costup2", costup2);
+  localStorage.setItem("costup3", costup3);
+  localStorage.setItem("costauto", costauto);
+  localStorage.setItem("costauto2", costauto2);
+  localStorage.setItem("maxbar", maxbar);
+
+}
+
+window.onload = function () {
+  const cat = document.getElementById("cat");
+
+  cat.onclick = function () {
+    clickCat();
+  };
+};
+
+clicks = Number(localStorage.getItem("clicks")) || 0;
+lines = Number(localStorage.getItem("lines")) || 0;
+power = Number(localStorage.getItem("power")) || 1;
+lvl = Number(localStorage.getItem("lvl")) || 1;
+auto = Number(localStorage.getItem("auto")) || 0;
+costup1 = Number(localStorage.getItem("costup1")) || 10;
+costup2 = Number(localStorage.getItem("costup2")) || 50;
+costup3 = Number(localStorage.getItem("costup3")) || 100;
+costauto = Number(localStorage.getItem("costauto")) || 100;
+costauto2 = Number(localStorage.getItem("costauto2")) || 500;
+maxbar = Number(localStorage.getItem("maxbar")) || 100;
+
+function clickCat() {
+  if (bstclck) {
+    clicks += 1
+    clicks += maxbar / 2;
+    lines += maxbar / 2;
+    bstclck = false;
+  //  updateUI();
+} else {
+  clicks += 1;
+  lines += power;
+  createEffect("+" + power, event.clientX, event.clientY);
+  //updateUI();
+if (Math.random() < 0.000001) {
+  lines += power * 250;
+  createEffect("+" + power, event.clientX, event.clientY);
+  console.log("boost''rare''");
+} else if (Math.random() < 0.005) {
+  lines += power * 10;
+  createEffect("+" + power, event.clientX, event.clientY);
+  console.log("boost''ultrarare''")
+} else {
+  ;
+}
+}
+}
+
+function createEffect(text, x, y) {
+  let el = document.createElement("div");
+  el.className = "effect";
+  el.textContent = text;
+
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+
+  document.getElementById("effects").appendChild(el);
+
+  setTimeout(() => {
+    el.remove();
+  }, 600);
+}
+
+function playkaz() {
+if (lines >= stav) {
+
+  lines -= stav;
+  updateUI();
+  if (Math.random() < 0.5) {
+    lines += stav * 2;
+    console.log("50(для тестов)");
+  } else if (Math.random() < 0.1) {
+    lines += stav * 3 * 2;
+    console.log("150(для тестов)");
+  } else {
+    ;
+  }
+  updateUI();
+
+} else {
+  alert("ИФ НОУ МАНИ = НОУ КАЗИК")
+}
+
+}
+
+function uplvl() {
+  if (lines >= maxbar) {
+    resbar();
+    bstclck = true;
+    power = lvl;
+    updateUI();
+  } else {
+    alert("беда с деньгами");
+  }
+}
+
+function resbar() {
+  lines -= maxbar;
+  if (lines > 0) lines = 0;
+  power = 1;
+  maxbar *= 2;
+  lvl += 1;
+  costup1 = 10;
+  costup2 = 50;
+  costup3 = 100;
+  costauto = 100;
+  costauto2 = 500;
+  auto = 0;
+  updateUI();
+};
+
+function closeInput() {
+  let box = document.querySelector("#inputModal .modal-content");
+
+  box.style.transform = "scale(0.8)";
+  box.style.opacity = "0";
+
+  setTimeout(() => {
+    document.getElementById("inputModal").style.display = "none";
+  }, 200);
+}
+
+let inputCallback = null;
+
+function openInput(text, callback) {
+  document.getElementById("inputText").textContent = text;
+  document.getElementById("inputModal").style.display = "flex";
+  inputCallback = callback;
+
+  setTimeout(() => {
+  let box = document.querySelector("#inputModal .modal-content");
+  box.style.transform = "scale(1)";
+  box.style.opacity = "1";
+}, 10);
+}
+
+function confirmInput() {
+  let val = Number(document.getElementById("inputField").value);
+  let box = document.querySelector("#inputModal .modal-content");
+
+box.style.transform = "scale(0.8)";
+box.style.opacity = "0";
+
+setTimeout(() => {
+  document.getElementById("inputModal").style.display = "none";
+}, 200);
+
+  if (inputCallback) {
+    inputCallback(val);
+  }
+}
+
+
+
+function oshp() {
+
+let shp = document.getElementById("shp")
+
+if (shp.style.display == "none") {
+  shp.style.display = "block";
+} else {
+  shp.style.display = "none";
+};
+
+};
+
+function resetGame() {
+  localStorage.clear();
+  location.reload(true);
+}
+
+function dev() {
+  {openInput("↓введите код↓", function(code) {
+  if (code == 714) {
+    openModal("доступ открыт 😈");
+    document.getElementById("devP").style.display = "block";
+  } else {
+    openModal("ноу ❌");
+  }
+
+});
+
+}
+}
+
+
+function setL() {
+  openInput("↓укажите кол-во строк↓", function(val) {
+  lines = val;
+  updateUI();
+});
+  updateUI();
+}
+
+function setLvl() {
+  openInput("↓укажите уровень↓", function(val) {
+  lvl = val;
+  power = val;
+  updateUI();
+});
+  power = lvl;
+  updateUI();
+}
+
+function upg() {
+  if (lines >= costup1) {
+    lines -= costup1;
+    power += 1;
+    costup1 += 10;
+    updateUI();
+  } else {
+    return;
+  };
+};
+
+function upg2() {
+  if (lines >= costup2) {
+    lines -= costup2;
+    power += 5;
+    costup2 += 50;
+    updateUI();
+  } else {
+    alert("недостаточно строк 😭");
+  };
+};
+
+function upg3() {
+  if (lines >= costup3) {
+    lines -= costup3;
+    power *= 2;
+    costup3 *= 4;
+    updateUI();
+  } else {
+    alert("недостаточно строк 😭");
+  };
+};
+
+
+function buyauto() {
+  if (lines >= costauto) {
+    lines -= costauto;
+    costauto += 100;
+    updateUI()
+  autoclk();
+  } else {
+    alert("НЕДОСТАТОЧНО СРЕДСТВ? ЗАХОДИ НА САЙТ ''vvv.100%scam.rofl'' И ПОЛУЧИ 500 РУБЛЕЙ НА ХАЛЯВУ");
+  }
+}
+
+function buyauto2() {
+  if (lines >= costauto2) {
+    lines -= costauto2;
+    costauto2 += 500;
+    updateUI()
+  autoclk2();
+  } else {
+    alert("НЕДОСТАТОЧНО СРЕДСТВ? ЗАХОДИ НА САЙТ ''vvv.100%scam.rofl'' И ПОЛУЧИ 500 РУБЛЕЙ НА ХАЛЯВУ");
+  }
+}
+
+function autoclk() {
+  auto += 1;
+  updateUI();
+}
+
+function autoclk2() {
+  auto += 5;
+  updateUI();
+}
+
+function opshp() {
+  document.getElementById("shopModal").style.display = "flex";
+
+  setTimeout(() => {
+    let box = document.querySelector("#shopModal .modal-content");
+    box.style.transform = "scale(1)";
+    box.style.opacity = "1";
+  }, 10);
+}
+
+function clshp() {
+  let box = document.querySelector("#shopModal .modal-content");
+
+  box.style.transform = "scale(0.8)";
+  box.style.opacity = "0";
+
+  setTimeout(() => {
+    document.getElementById("shopModal").style.display = "none";
+  }, 200);
+}
+
+function openModal(text) {
+  document.getElementById("modalText").textContent = text;
+  document.getElementById("modal").style.display = "flex";
+  setTimeout(() => {
+  let box = document.querySelector("#modal .modal-content");
+  box.style.transform = "scale(1)";
+  box.style.opacity = "1";
+}, 10);
+}
+function closeModal() {
+  let box = document.querySelector("#modal .modal-content");
+
+  box.style.transform = "scale(0.8)";
+  box.style.opacity = "0";
+
+  setTimeout(() => {
+    document.getElementById("modal").style.display = "none";
+  }, 200);
+}
+
+setInterval(function() {
+  updateUI();
+}, 100)
+
+setInterval(function() {
+  lines += auto;
+  updateUI();
+}, 1000)
+
+window.addEventListener("load", updateUI);
+</script>
+
+<style>
+
+  body {
+  display: flex;
+  justify-content: flex-start;   
+  align-items: center;       
+  height: 100vh;             
+  flex-direction: column;    
+  gap: 10px;
+
+  background: #111;
+  min-height: 100vh;
+  color: white;
+}
+
+pre {
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.DevSbros {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  text-align: center;
+  justify-content: center
+}
+
+.Clilin {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  text-align: center;
+  justify-content: center
+}
+
+button:active {
+  transform: scale(0.7);
+  transition: 0.2s;
+  background: #333;
+  transform: scale(0.95);
+}
+
+button:hover {
+  transition: 0.2s;
+  background: #333;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px white;
+}
+
+button {
+  background: #222;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 12px 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: rgb(150,0,200);
+  width: 80%;
+  max-width: 90%;
+  padding: 10px;
+  border-radius: 15px;
+
+  transform: scale(0.8);
+  opacity: 0;
+  transition: 0.25s cubic-bezier(0.5, 3.5, 0.5, 0.75);
+  box-shadow: 5px 5px 50px rgb(150,0,200);
+}
+
+  #effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.effect {
+  position: absolute;
+  color: lime;
+  font-weight: bold;
+  animation: fly 0.6s forwards;
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.game {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cat {
+  color: rgb(0, 255, 0);
+  font-size: 18px;
+}
+
+</style>
+<body>
+
+  <div class="game">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<h1>KoToKlicKeP</h1>
+
+<div id="cat" class="cat">
+<pre>
+     S C R E E P
+\    /\
+ )  ( ')
+(  /  )
+\(__)|
+ ↑  ↑  ↑
+</pre>
+</div>
+
+<div id="effects"></div>
+
+<button onclick="uplvl()">+уровень</button>
+
+<p>Уровень <span id="lvl">1</span> (<span id="lineslvl">0</span>/<span id="maxbar">100</span>)</p>
+
+<div class="Clilin">
+<p>Клики: <span id="clicks">0</span></p>
+<p>Строки: <span id="lines">0</span></p>
+</div>
+
+<progress id="bar" value="0" max="100"></progress>
+
+<button onclick="opshp()">МАГАЗИН</button>
+
+<div id="shopModal" style="display:none" class="modal">
+  <div class="modal-content">
+    <h2>🛒 МАГАЗИН (баланс: <span id="lineshp">1</span>)</h2>
+
+    <button onclick="upg()">sudo/+1 мощность (<span id="costup1">10</span>)</button>
+    <button onclick="upg2()">sudo/+5 мощность (<span id="costup2">50</span>)</button>
+    <button onclick="upg3()">sudo/×2 мощность (<span id="costup3">100</span>)</button>
+
+    <button onclick="buyauto()">sudo/+1 авто (<span id="costauto">100</span>)</button>
+    <button onclick="buyauto2()">sudo/+5 авто (<span id="costauto2">500</span>)</button>
+
+    <button onclick="clshp()">ЗАКРЫТЬ</button>
+  </div>
+</div>
+
+<button onclick="playkaz()">(50¢)PREMIUM CASINO(играть)</button>
+
+<p>Мощность: <span id="power">1</span></p>
+
+<details>
+  <summary>критические клики</summary>
+  <h3>в игре 2 критических клика: с множителем ×10, с множителем ×250. Те что с множителем ×10 можно получить при клике с шансом 0.5%, или 1 к 2; те что с множителем ×250 можно получить при клике с шансом 0.0001%, или 1 к 100000 :)</h3>
+</details>
+
+<div class="DevSbros">
+
+<button onclick="dev()"><h2>🛠 DEV</h2></button>
+
+<button onclick="resetGame()"><h2>СБРОС</h2></button>
+
+</div>
+
+<div id="modal" style="display:none" class="modal">
+  <div class="modal-content">
+    <p id="modalText">текст</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<details id="devP" style="display:none">
+  <summary>X-Panel(orig)</summary>
+
+  <button onclick="setL()">задать строки</button>
+  <button onclick="setLvl()">задать уровень</button>
+</details>
+
+<div id="inputModal" style="display:none" class="modal">
+  <div class="modal-content">
+    <p id="inputText">введи</p>
+    <input id="inputField" type="number">
+    <button onclick="confirmInput()">OK</button>
+    <button onclick="closeInput()">ОТМЕНА</button>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
